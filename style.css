@@ -1,0 +1,160 @@
+/* @override http://rms.site/style.css */
+
+/* @group Reset */
+
+/* v1.0 | 20080212 | meyerweb CSS Reset */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, a, abbr, acronym,
+ address, big, cite, del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, tt, var,
+b, u, i, ul, dl, dt, dd, center,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+body {
+	line-height: 1;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+del {
+	text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/********** End of Reset **************/
+
+/* @end */
+
+html {
+	background-color: #EBE9DC;
+}
+
+body {
+	width: 856px;
+	margin: auto;
+	font: 18px/1.444em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	margin-top: 78px;
+	margin-bottom: 130px;
+	padding-left: 52px;
+	padding-right: 52px;
+	background-color: #FEFFFF;
+	color: #3C3F36;
+}
+
+
+h1 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 2em;
+	line-height: 1.444em;
+	padding-top: 1.444em;
+	margin-bottom: 0.722em;
+	text-transform: none;
+}
+
+h2 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 1.444em;
+	line-height: 2em;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	border-bottom: 2px solid #72918B;
+}
+
+a {
+	color: #72918B;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+p {
+	font-size: 1em;
+	margin-bottom: 1.444em;
+}
+
+dt {
+	font-weight: bold;
+}
+
+h2#menu {
+	width: 50%;
+}
+
+fieldset#signin {
+	float: right;
+	width: 320px;
+	border: 2px solid #72918B;
+	padding: 0em 26px;
+}
+
+fieldset#signin h2 {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 1.444em;
+	font-weight: bold;
+	line-height: 2em;
+	margin: 0;
+	border: none;
+}
+
+fieldset#signin label {
+	display: block;
+	float: left;
+	line-height: 2.888em;
+	width: 30%;
+	clear: both;
+}
+
+fieldset#signin input {
+	font: 1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	padding: 0;
+	margin: 0;
+	margin-top: 0.722em;
+	height: 1.444em;
+	width: 68%;
+	vertical-align: middle;
+	float: right;
+}
+
+fieldset#signin input[type="submit"] {
+	clear: both;
+	width: 100px;
+	margin-top: 0.722em;
+	float: right;
+}
+
+fieldset#signin p {
+	clear: left;
+	margin: 0;
+	font-size: 0.722em;
+	line-height: 4em;
+}
+
+#footer {
+	clear: both;
+	font-size: 0.722em;
+	line-height: 4em;
+	margin-top: 2em;
+	border-top: 2px #72918B solid;
+	text-align: right;
+}
