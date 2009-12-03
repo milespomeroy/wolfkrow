@@ -45,6 +45,18 @@ table {
 
 /* @end */
 
+/*
+******** Colors *********
+* 
+* Dark Gray: #3C3F36
+* Off White: #FEFFFF
+* Tan: #EBE9DC
+* Green: #72918B
+* Bright Green: #9FB03E
+*
+*************************
+*/
+
 html {
 	background-color: #EBE9DC;
 }
@@ -78,6 +90,7 @@ h2 {
 	margin-top: 1em;
 	margin-bottom: 0.5em;
 	border-bottom: 2px solid #72918B;
+	clear: both;
 }
 
 a {
@@ -93,19 +106,73 @@ p {
 	margin-bottom: 1.444em;
 }
 
+hr {
+	clear: both;
+	border: none;
+	border-bottom: 2px solid #72918B;
+	padding-top: 1em;
+}
+
+ul {
+	margin-left: 26px;
+	margin-bottom: 1em;
+}
+
 dt {
 	font-weight: bold;
+}
+
+.small {
+	font-size: 0.722em;
+	line-height: 2em;
 }
 
 h2#menu {
 	width: 50%;
 }
 
+input[type="checkbox"] {
+	clear: both;
+	margin: 0;
+	padding: 0;
+	display: block;
+	float: left;
+}
+
+label {
+	display: block;
+}
+
+table {
+	border: 1px solid ;
+	margin-top: 1em;
+}
+
+th {
+	background-color: #72918B;
+	border: 1px solid #000;
+	padding: 13px;
+	color: #FEFFFF;
+}
+
+td {
+	border: 1px solid;
+	padding: 13px;
+}
+
+td.center {
+	text-align: center;
+}
+
+fieldset {
+	border: 2px solid #72918B;	
+	padding: 0em 26px;
+	width: 50%;
+}
+
 fieldset#signin {
 	float: right;
 	width: 320px;
-	border: 2px solid #72918B;
-	padding: 0em 26px;
 }
 
 fieldset#signin h2 {
@@ -117,23 +184,52 @@ fieldset#signin h2 {
 	border: none;
 }
 
-fieldset#signin label {
+fieldset label {
 	display: block;
 	float: left;
 	line-height: 2.888em;
-	width: 30%;
 	clear: both;
 }
 
-fieldset#signin input {
+fieldset#signin label {
+	width: 20%;
+}
+
+fieldset input {
 	font: 1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
 	padding: 0;
 	margin: 0;
 	margin-top: 0.722em;
 	height: 1.444em;
-	width: 68%;
 	vertical-align: middle;
 	float: right;
+	width: 60%;
+	clear: right;
+}
+
+fieldset textarea {
+	font: 1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	padding: 0;
+	margin: 0;
+	margin-top: 0.722em;
+	float: right;
+	width: 60%;
+}
+
+fieldset#signin input {
+	width: 68%;
+}
+
+fieldset input[type="submit"] {
+	clear: both;
+	float: right;
+	width: 100px;
+	margin: 0;
+}
+
+fieldset select {
+	float: right;
+	margin-top: 0.722em;
 }
 
 fieldset#signin input[type="submit"] {
@@ -145,10 +241,44 @@ fieldset#signin input[type="submit"] {
 
 fieldset#signin p {
 	clear: left;
-	margin: 0;
 	font-size: 0.722em;
 	line-height: 4em;
 }
+
+#standard {
+	float: left;
+	width: 50%;
+}
+
+#additional {
+	float: left;
+	margin-left: 26px;
+}
+
+/* Select Vendor */
+
+.vendor {
+	background-color: #EBE9DC;
+	padding: 26px;
+	margin-top: 2em;
+	height: 10em;
+}
+
+.vendor h3 {
+	font-size: 1.444em;
+	margin-bottom: 0.722em;
+}
+
+.vendor p {
+	margin: 0;
+	
+}
+
+.vendor img {
+	float: right;
+}
+
+/* Footer */
 
 #footer {
 	clear: both;

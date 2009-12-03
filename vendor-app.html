@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+	<title>Vendor Application</title>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="style.css" media="all">
+</head>
+<body>
+	
+	<h1>Vendor Application</h1>
+	
+	<p>Interested in being a vendor at Wolfkrow Diner? Fill out the form below:</p>
+	
+	<fieldset>
+	<form action="vendor-app-submit.html" method="post">
+		<label for="name">Name:</label>
+		<input type="text" id="name">
+		
+		<label for="email">Email:</label>
+		<input type="text" id="email">
+		
+		<label for="password">Password:</label>
+		<input type="password" id="password">
+		
+		<hr>
+		
+		<label for="type">Type:</label>
+		<select id="type">
+			<option>Host</option>
+			<option>Waiter</option>
+			<option>Cook</option>
+			<option>Busboy</option>
+		</select>
+		
+		<label for="qualifications">Qualifications:</label>
+		<textarea id="qualifications" cols="30" rows="5"></textarea>
+		
+		<label for="pic">Picture: (150x200)</label>
+		<input type="file" id="pic">
+		
+		<input type="submit" value="Apply">
+	</form>
+	</fieldset>
+	
+	<div id="footer">
+		&copy; Wolfkrow Diner 2009 | Software Project for AJE by Miles Pomeroy
+	</div>
+
+</body>
+</html>
