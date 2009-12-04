@@ -1,0 +1,20 @@
+Todo
+====
+
+Views
+-----
+
+- finish html views for: 
+	- current customers
+	- review applicants
+	- manager's vendor view
+	- manager's dashboard
+- fix up the css to fit the grid and look pretty
+	
+Model
+-----
+
+
+Controller
+----------
+
