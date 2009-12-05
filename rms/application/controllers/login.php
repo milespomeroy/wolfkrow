@@ -132,9 +132,7 @@ class Login extends Controller {
 	 **/
 	function _check_existing_email($email)
 	{
-		$query = $this->db->get_where('users', array('email' => $email));
-		
-		if ($query->num_rows() > 0) {
+		if ($this->signup_model->get_num_by_email($email) > 0) {
 			//email already exists
 			$this->form_validation->set_message('_check_existing_email', 
 					"Account already exists for $email. Try <a href='/'>
