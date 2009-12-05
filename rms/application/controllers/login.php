@@ -17,7 +17,7 @@ class Login extends Controller {
 
 	/**
 	 * Signup
-	 * signup form for new users
+	 * signup form for new guests
 	 **/
 	function signup()
 	{
@@ -30,17 +30,38 @@ class Login extends Controller {
 		{
 			$this->load->view('new-user');
 		}
-		else
-		{	// TODO: input the rest of the data from the form
-			if ($this->_create(
-					$this->input->post('email'), 
-					$this->input->post('password')
-					)
-			) {
+		else // validation successful
+		{
+			
+			// create data arrays for insertion
+			// TODO: validation on credit card info
+			$account = array (
+						'cc_number' => $this->input->post('credit-card'),
+						'cc_type' => $this->input->post('cc-type'),
+						'cc_security_code' => $this->input->post('security-code'),
+						'billing_name' => $this->input->post('name-card'),
+						'billing_address' => $this->input->post('billing-add'),
+						'cc_exp_month' => $this->input->post('exp-date-month'),
+						'cc_exp_year' => $this->input->post('exp-date-year')
+					);
+			
+			$user_data = array (
+						'full_name' => $this->input->post('full-name'),
+						'email' => $this->input->post('email'),
+						'password' => $this->input->post('password'),
+						'user_type' => 'guest'
+					);
+			
+			if ($this->_create($account, $user_data)) 
+			{
 				// TODO: login and get sent to your landing page
+				// could do some email activation stuff here but won't now
 				redirect('/');
-			} else {
+			} 
+			else 
+			{
 				// problems inserting data into the database
+				// TODO: put this in a log somewhere
 				echo "I'm sorry we are experiencing problems with our
 					database. Please try signing up again.";
 			}
@@ -50,26 +71,36 @@ class Login extends Controller {
 	
 	/**
 	 * _create
-	 * private function
+	 * private function _create(array1, array2)
+	 * array1 to insert into accounts table
+	 * array2 to insert into users table
+	 *
 	 * Creates a user account for guests
 	 **/
-	function _create($email = '', $password = '')
+	function _create($account, $user)
 	{
 		//Make sure account info was sent
-		if($email == '' OR $password == '') {
+		if(!$user OR !$account) {
 			return false;
 		}
-				
+		
 		//Encrypt password
-		$password = md5($password);
+		$user['password'] = md5($user['password']);
 	
+		// TODO: move db actions to model
 		//Insert account into the database
-		$data = array(
-					'email' => $email,
-					'password' => $password
-				);
-		$this->db->set($data); 
-		if(!$this->db->insert('users')) {
+		$this->db->set($account);
+		if (!$this->db->insert('accounts'))
+		{
+			return false;
+		}
+		
+		// add account_id just inserted into user data array
+		$user['account_id'] = $this->db->insert_id();
+		
+		// insert user info into database
+		$this->db->set($user); 
+		if (!$this->db->insert('users')) {
 			//There was a problem!
 			return false;						
 		}
@@ -79,7 +110,7 @@ class Login extends Controller {
 
 		//Set session data
 		$this->session->set_userdata(array('id' => $user_id,
-			'email' => $email));
+			'email' => $user['email']));
 	
 		//Set logged_in to true
 		$this->session->set_userdata('logged_in', true);			
