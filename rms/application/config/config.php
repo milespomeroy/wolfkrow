@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://example.com/";
+$config['base_url']	= "http://rms.site/"; // change for dev site
 
 /*
 |--------------------------------------------------------------------------
