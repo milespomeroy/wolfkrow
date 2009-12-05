@@ -90,25 +90,12 @@ class Login extends Controller {
 		//Encrypt password
 		$user['password'] = md5($user['password']);
 	
-		// TODO: move db actions to model
-		//Insert account into the database
-		$this->db->set($account);
-		if (!$this->db->insert('accounts'))
-		{
-			return false;
-		}
+		// Insert account into the database and get id
+		$user['account_id'] = $this->login_model->insert_account($account);
 		
-		// add account_id just inserted into user data array
-		$user['account_id'] = $this->db->insert_id();
+		// insert user info into database and get id
+		$user_id = $this->login_model->insert_user($user);
 		
-		// insert user info into database
-		$this->db->set($user); 
-		if (!$this->db->insert('users')) {
-			//There was a problem!
-			return false;						
-		}
-		$user_id = $this->db->insert_id();
-	
 		//Automatically login to created account
 
 		//Set session data
@@ -132,13 +119,16 @@ class Login extends Controller {
 	 **/
 	function _check_existing_email($email)
 	{
-		if ($this->signup_model->get_num_by_email($email) > 0) {
+		if ($this->login_model->get_num_by_email($email) > 0) 
+		{
 			//email already exists
 			$this->form_validation->set_message('_check_existing_email', 
 					"Account already exists for $email. Try <a href='/'>
 					logging in</a>.");
 			return false;
-		} else {
+		} 
+		else 
+		{
 			// new email
 			return true;
 		}

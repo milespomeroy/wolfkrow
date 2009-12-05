@@ -108,7 +108,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('signup_model');
+$autoload['model'] = array('login_model');
 
 
 
