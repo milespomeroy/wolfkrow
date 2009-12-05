@@ -54,7 +54,7 @@ class Login extends Controller {
 			
 			if ($this->_create($account, $user_data)) 
 			{
-				// TODO: login and get sent to your landing page
+				// TODO: login and get sent guest landing page
 				// could do some email activation stuff here but won't now
 				redirect('/');
 			} 
@@ -72,8 +72,11 @@ class Login extends Controller {
 	/**
 	 * _create
 	 * private function _create(array1, array2)
-	 * array1 to insert into accounts table
-	 * array2 to insert into users table
+	 * array1
+	 *  (cc_number, cc_type, cc_security_code, billing_name, 
+	 *  billing_address, cc_exp_month, cc_exp_year)
+	 * array2
+	 * 	(full_name, email, password, user_type)
 	 *
 	 * Creates a user account for guests
 	 **/

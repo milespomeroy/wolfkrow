@@ -4,17 +4,17 @@ $config = array( 'login/signup' =>	array (	// TODO: Add more validation
 		array (
 			'field' => 'full-name',
 			'label' => 'Full Name',
-			'rules' => 'required'
+			'rules' => 'trim|required|max_length[50]|xss_clean'
 		),
 		array (
 			'field'   => 'email', 
 			'label'   => 'Email', 
-			'rules'   => 'required|callback__check_existing_email'
+			'rules'   => 'trim|required|max_length[50]|valid_email|callback__check_existing_email'
 		),
 		array (
 			'field'   => 'password', 
 			'label'   => 'Password', 
-			'rules'   => 'required'
+			'rules'   => 'trim|required'
 		)
 	)
 );
