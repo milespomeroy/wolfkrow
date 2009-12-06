@@ -144,14 +144,15 @@ class Login extends Controller {
 		$user['account_id'] = $this->login_model->insert_account($account);
 		
 		// insert user info into database and get id
-		$user_id = $this->login_model->insert_user($user);
+		$user['user_id'] = $this->login_model->insert_user($user);
 		
 		//Automatically login to created account
+		//Remove the password field
+		unset($user['password']);
 
 		//Set session data
-		$this->session->set_userdata(array('id' => $user_id,
-			'email' => $user['email']));
-	
+		$this->session->set_userdata($user);
+			
 		//Set logged_in to true
 		$this->session->set_userdata('logged_in', true);			
 	

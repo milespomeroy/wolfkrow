@@ -8,6 +8,9 @@
 </head>
 <body>
 	
+	<!--
+		TODO You can do better than this. Replace login form if logged in.
+	-->
 	<div id="status">
 	<?php if($this->session->userdata('logged_in')) 
 		{
