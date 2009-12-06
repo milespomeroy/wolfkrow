@@ -2,19 +2,21 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-	<title>Select a Vendor</title>
+	<title>Select a <?=ucwords($type)?></title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
 </head>
 <body>
 
-	<h1>Select a Vendor (Host)</h1>
+	<h1>Select a <?=ucwords($type)?></h1>
 
+	<?php if ($type == 'host'): ?>
 	<p>Thank you for choosing Wolfkrow Diner. It’s the only choice in town.</p>
 	
 	<p>Begin your experience with us by selecting one of the hosts below to 
 		seat you. You can stick with the standard package or select additional
 		services.</p>
+	<?php endif; ?>
 		
 		
 	<div id="standard">
