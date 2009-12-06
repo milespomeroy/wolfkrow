@@ -54,7 +54,7 @@ class Login extends Controller {
 
 			//Login was successful	
 			// TODO: send to correct landing page		
-			redirect($this->uri->uri_string());
+			redirect('/meal');
 			
 		}
 	}
@@ -144,7 +144,7 @@ class Login extends Controller {
 		$user['account_id'] = $this->login_model->insert_account($account);
 		
 		// insert user info into database and get id
-		$user['user_id'] = $this->login_model->insert_user($user);
+		$user['id'] = $this->login_model->insert_user($user);
 		
 		//Automatically login to created account
 		//Remove the password field
