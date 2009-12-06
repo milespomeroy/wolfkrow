@@ -20,6 +20,14 @@ class Login_model extends Model {
 		return $query->num_rows();
 	}
 	
+	// get_user(string)
+	// returns row array
+	function get_user($email)
+	{
+		$query = $this->db->get_where('users', array('email' => $email));
+		return $query->row_array();
+	}
+	
 	/**
 	 * insert_account(array)
 	 *  assoc array = (cc_number, cc_type, cc_security_code, billing_name, 

@@ -10,9 +10,59 @@ class Login extends Controller {
 	 * Index 
 	 * returns homepage view with login screen
 	 **/
-	function Index()
+	function index()
 	{
-		$this->load->view('homepage');
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<p class="error">', 
+			'</p>');
+				
+		// rules in ../config/form_validation.php
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('homepage');
+		}
+		else // validation success
+		{
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
+									
+			// Get user info as an array
+			$row = $this->login_model->get_user($email);
+			
+			//Check against password
+			if(md5($password) != $row['password']) 
+			{
+				// Wrong password
+				// TODO: show some message for wrong password
+				return false;
+			}
+
+			//Destroy old session
+			$this->session->sess_destroy();
+
+			//Create a fresh, brand new session
+			$this->session->sess_create();
+
+			//Remove the password field
+			unset($row['password']);
+
+			//Set session data
+			$this->session->set_userdata($row);
+
+			//Set logged_in to true
+			$this->session->set_userdata(array('logged_in' => true));			
+
+			//Login was successful	
+			// TODO: send to correct landing page		
+			redirect($this->uri->uri_string());
+			
+		}
+	}
+	
+	function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('/');
 	}
 
 	/**
@@ -121,16 +171,40 @@ class Login extends Controller {
 	{
 		if ($this->login_model->get_num_by_email($email) > 0) 
 		{
-			//email already exists
+			//email already exists		
 			$this->form_validation->set_message('_check_existing_email', 
-					"Account already exists for $email. Try <a href='/'>
-					logging in</a>.");
+				"Account already exists for that $email. 
+				Try <a href='/'>logging in</a>.");
 			return false;
 		} 
 		else 
 		{
 			// new email
 			return true;
+		}
+	}
+	
+	/**
+	 * _check_for_account
+	 * 
+	 * callback function used in validating signin
+	 * 
+	 * Checks if a certain email is already associated with a user account
+	 * before logging in
+	 **/
+	function _check_for_account($email)
+	{
+		if ($this->login_model->get_num_by_email($email) > 0) 
+		{
+			// account exists		
+			return true;
+		} 
+		else 
+		{
+			// no account
+			$this->form_validation->set_message('_check_for_account', 
+				"Account not found. <a href='/login/signup'>Create one.</a>");
+			return false;
 		}
 	}
 
