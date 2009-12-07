@@ -20,12 +20,9 @@
 		
 		
 	<div id="standard">
-		<h2>Host Standard Package</h2>
+		<h2><?=ucwords($type)?> Standard Package</h2>
 	
-		<ul>
-			<li>Seat you at your choice of table or booth.</li>
-			<li>Provide menus.</li>
-		</ul>
+		<?php echo ul($package, array('id' => 'package')); ?>
 	</div>	
 	
 	<div id="additional">
@@ -38,7 +35,7 @@
 		<label for="dance">Do a Little Dance</label>
 	</div>	
 	
-	<h2>Hosts</h2>
+	<h2><?=ucwords($type)?></h2>
 	
 	<label for="sort-by">Sort by:</label>
 	<select id="sort-by">
