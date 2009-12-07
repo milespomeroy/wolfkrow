@@ -2,32 +2,33 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-	<title>Wolfgang Puck as your Host</title>
+	<title><?=$vendor_name?> will be your <?=$vendor_type?></title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
 </head>
 <body>
 	
-	<h1>You’ve Selected Wolfgang Puck</h1>
+	<h1>You’ve Selected <?=$vendor_name?></h1>
 	
-	<img src="images/wolfgang-puck.jpg" alt="Wolfgang Puck" style="float:right;">
-	<p>Thank you for selecting Wolfgang Puck as your host for tonight. He will be with you momentarily.</p>
+	<img src="/images/<?=$vendor_id?>.jpg" alt="Wolfgang Puck" style="float:right;">
+	<p>Thank you for selecting <?=$vendor_name?> as your <?=$vendor_type?> 
+		for tonight. <?=$vendor_name?> will be with you momentarily.</p>
 	
 	<input type="submit" value="Cancel Order" disabled>
 	
 	<h2>Services you ordered:</h2>
 	
 	<ul>
-		<li>Seat you at your choice of table or booth.</li>
-		<li>Provide a menus.</li>
-		<li>Provide a high chair. ($5)</li>
+	<?php foreach ($services as $service): ?>
+		<li><?=$service['name']?></li>
+	<?php endforeach; ?>
 	</ul>
 	
-	<h3>Total: $25.00</h3>
+	<h3>Total: $<?=$total_price?></h3>
 	
 	<p class="small">This amount will be deducted directly from your account.</p>
 	
-	<a href="/meal">Select a Waiter &raquo;</a>
+	<a href="/meal">Next &raquo;</a>
 
 	
 	<div id="footer">

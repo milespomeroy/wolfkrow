@@ -262,9 +262,31 @@ class Meal_model extends Model {
 		}
 	}
 	
+	// @return (array) vendor_id, vendor_name, 
 	function get_order_details($order_id)
 	{
-		//$this->db->query("")
+		// get vendor info
+		$vquery = $this->db->query("SELECT vendors.id AS vendor_id, 
+			vendors.name AS vendor_name, 
+			vendor_types.name AS vendor_type 
+			FROM vendors, vendor_types 
+			WHERE vendors.id = 
+			(SELECT vendor_id FROM orders WHERE id = $order_id) 
+			AND type_id = vendor_types.id");
+		$data = $vquery->row_array();
+		
+		// get price info
+		$pquery = $this->db->query("SELECT total_price FROM orders 
+			WHERE id = $order_id");
+		$data['total_price'] = $pquery->row()->total_price;
+		
+		// get services
+		$serv_query = $this->db->query("SELECT name
+			FROM services_for_orders, services 
+			WHERE service_id = services.id AND order_id = $order_id");
+		$data['services'] = $serv_query->result_array();
+		
+		return $data;
 	}
 
 }
