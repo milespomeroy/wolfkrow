@@ -76,14 +76,12 @@ class Meal extends Controller {
 			
 			// Set data to host to view that vendor type selection page
 			$data['type'] = 'host';
-			$data['package'] = array(
-				'Seat you at your choice of table or booth.', 
-				'Provide menus.'
-				);
+			$data['package'] = 
+				$this->Meal_model->get_std_package($data['type']);
 			$data['add_services'] = 
-				$this->Meal_model->get_vendor_services('host');
+				$this->Meal_model->get_vendor_services($data['type']);
 			$data['vendors'] = 
-				$this->Meal_model->get_vendors('host');
+				$this->Meal_model->get_vendors($data['type']);
 		}
 		// Load view with vendor type data generated from above
 		$this->load->view('select-vendor', $data);
@@ -147,6 +145,16 @@ class Meal extends Controller {
 					{
 						// log this error. Probably delete order if this happens.
 						echo "Transaction not successful.";
+					}
+					
+					// if order was for busboy, mark meal as finished
+					$order = $this->Meal_model->get_order_details($order_id);
+					if ($order['vendor_type'] == 'busboy')
+					{
+						$this->Meal_model->finish_meal();
+						/*
+							TODO BUG: problems when resubmitting after meal marked as finished
+						*/
 					}
 				}
 				else

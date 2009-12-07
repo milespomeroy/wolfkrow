@@ -130,21 +130,25 @@ class Meal_model extends Model {
 		}
 	}
 	
+	function get_meal_id()
+	{
+		$user_id = $this->session->userdata('id');
+		
+		$mquery = $this->db->query("SELECT id FROM meals 
+			WHERE user_id = $user_id AND time_finished IS NULL");
+		return $mquery->row()->id;
+	}
+	
 	// get_order_id(int)
 	//
 	// @param vendor id 
 	// @return order id OR FALSE if no order found
 	function get_order_id($vendor_id)
 	{
-		// get user id from session data
-		$user_id = $this->session->userdata('id');
+		// get meal id 
+		$meal_id = $this->get_meal_id();
 		
-		// get meal id from query
-		$mquery = $this->db->query("SELECT id FROM meals 
-			WHERE user_id = $user_id AND time_finished IS NULL");
-		$meal_id = $mquery->row()->id;
-		
-		// check for existing order
+		// check for existing orders
 		$query = $this->db->query("SELECT id FROM orders 
 			WHERE vendor_id = $vendor_id AND meal_id = $meal_id");
 	
@@ -170,10 +174,8 @@ class Meal_model extends Model {
 		// get user id from session data
 		$user_id = $this->session->userdata('id');
 		
-		// get meal id from query
-		$mquery = $this->db->query("SELECT id FROM meals 
-			WHERE user_id = $user_id AND time_finished IS NULL");
-		$meal_id = $mquery->row()->id;
+		// get meal id 
+		$meal_id = $this->get_meal_id();
 		
 		// get price from vendor table
 		$pquery = $this->db->query("SELECT price FROM vendors 
@@ -262,7 +264,11 @@ class Meal_model extends Model {
 		}
 	}
 	
-	// @return (array) vendor_id, vendor_name, 
+	// get_order_details(int)
+	//
+	// @param (int) order id
+	// @return (array) vendor_id, vendor_name, vendor_type, total_price, 
+	//   services (array) 
 	function get_order_details($order_id)
 	{
 		// get vendor info
@@ -287,6 +293,19 @@ class Meal_model extends Model {
 		$data['services'] = $serv_query->result_array();
 		
 		return $data;
+	}
+	
+	// finish_meal()
+	// mark the current meal as finished
+	//
+	// @return TRUE/FALSE depending on status of query execution
+	function finish_meal()
+	{
+		$meal_id = $this->get_meal_id();
+		$time_finished = date("Y-m-d H:i:s");
+		
+		return $this->db->query("UPDATE meals 
+			SET time_finished = '{$time_finished}' WHERE id = '{$meal_id}'");
 	}
 
 }
