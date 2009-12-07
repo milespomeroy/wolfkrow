@@ -90,14 +90,25 @@ class Meal_model extends Model {
 	//
 	// @param (int) vendor id number
 	// @return (array) vendor info:
-	//   id, name, type_id, qualifications, price, user_id, deactive
+	//   id, name, type_id, qualifications, price, user_id, deactive, type
 	// @return FALSE if vendor not found
 	function get_vendor($vendor_id)
 	{
-		$query = $this->db->query("SELECT * FROM vendors WHERE id = $vendor_id");
-		if ($query->num_rows() > 0)
+		// vendor info
+		$vquery = $this->db->query("SELECT vendors.*, vendor_types.name AS type 
+			FROM vendors, vendor_types 
+			WHERE vendors.id = $vendor_id AND vendors.type_id = vendor_types.id"
+			);
+		
+		if ($vquery->num_rows() > 0)
 		{
-			return $query->row_array();
+			// orders up - for currently serving data
+			$oquery = $this->db->query("SELECT id FROM orders 
+				WHERE vendor_id = $vendor_id AND filled = 0");
+
+			$data = $vquery->row_array();
+			$data['orders'] = $oquery->num_rows();
+			return $data;
 		}
 		else // vendor not found
 		{
