@@ -62,7 +62,21 @@ class Meal_model extends Model {
 		}
 	}
 	
+	// get_std_package(string)
+	// get the standard services package for a vendor type
+	//
+	// @param (string) vendor type
+	// @return (array of objects) name (string)
+	function get_std_package($vendor_type)
+	{
+		$query = $this->db->query("SELECT name FROM services 
+			WHERE vendor_type_id = (SELECT id FROM vendor_types 
+			WHERE name = '$vendor_type') AND standard = 1");
+		return $query->result();
+	}
+	
 	// get_vendor_services(string)
+	// get additional services that the vendor could do
 	//
 	// @param (string) vendor type like 'host' or 'waiter'
 	// @return (array of objects) each object has service info: 
@@ -71,7 +85,7 @@ class Meal_model extends Model {
 	{
 		$query = $this->db->query("SELECT id, name, description, price 
 			FROM services WHERE vendor_type_id = (SELECT id FROM vendor_types 
-			WHERE name = '$vendor_type')");
+			WHERE name = '$vendor_type') AND standard = 0");
 		return $query->result();
 	}
 	
@@ -116,7 +130,11 @@ class Meal_model extends Model {
 		}
 	}
 	
-	function is_new_order($vendor_id)
+	// get_order_id(int)
+	//
+	// @param vendor id 
+	// @return order id OR FALSE if no order found
+	function get_order_id($vendor_id)
 	{
 		// get user id from session data
 		$user_id = $this->session->userdata('id');
@@ -133,12 +151,12 @@ class Meal_model extends Model {
 		if ($query->num_rows() > 0)
 		{
 			// have existing order
-			return false;
+			return $query->row()->id;
 		}
 		else
 		{
 			// no order found
-			return true;
+			return false;
 		}
 		
 	}
@@ -173,7 +191,23 @@ class Meal_model extends Model {
 		// insert into orders table
 		if ($this->db->insert('orders', $data))
 		{
-			return $this->db->insert_id();
+			$order_id = $this->db->insert_id();
+			
+			// get std services
+			$squery = $this->db->query("SELECT id FROM services 
+				WHERE vendor_type_id = 
+				(SELECT type_id FROM vendors WHERE id = $vendor_id)
+				AND standard = 1");
+			// TODO: get additional services		
+			// insert each service into services_for_orders table
+			foreach ($squery->result() as $service)
+			{
+				$this->db->query("INSERT INTO services_for_orders 
+					(order_id, service_id) VALUES 
+					($order_id, $service->id)");
+			}
+			
+			return $order_id;
 		}
 		else // insertion failed
 		{
@@ -189,6 +223,9 @@ class Meal_model extends Model {
 	// @return TRUE/FALSE based on insertion success
 	function make_transaction($vendor_id, $order_id)
 	{
+		/*
+			TODO transaction to manager's account
+		*/
 		// get giver (user) account id from session data
 		$giver_account = $this->session->userdata('account_id');
 		
@@ -223,6 +260,11 @@ class Meal_model extends Model {
 		{
 			return false;
 		}
+	}
+	
+	function get_order_details($order_id)
+	{
+		//$this->db->query("")
 	}
 
 }

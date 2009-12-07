@@ -13,9 +13,9 @@
 	<img src="images/wolfgang-puck.jpg" alt="Wolfgang Puck" style="float:right;">
 	<p>Thank you for selecting Wolfgang Puck as your host for tonight. He will be with you momentarily.</p>
 	
-	<input type="submit" value="Cancel Order">
+	<input type="submit" value="Cancel Order" disabled>
 	
-	<h2>Services he will provide:</h2>
+	<h2>Services you ordered:</h2>
 	
 	<ul>
 		<li>Seat you at your choice of table or booth.</li>

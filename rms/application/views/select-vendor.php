@@ -22,7 +22,11 @@
 	<div id="standard">
 		<h2><?=ucwords($type)?> Standard Package</h2>
 	
-		<?php echo ul($package, array('id' => 'package')); ?>
+		<ul class="package">
+		<?php foreach ($package as $item): ?>
+			<li><?=$item->name?></li>
+		<?php endforeach; ?>
+		</ul>
 	</div>	
 	
 	<div id="additional">

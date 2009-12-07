@@ -15,7 +15,6 @@ class Meal extends Controller {
 			redirect('/');
 		}
 		
-		$this->load->helper('html'); // for package list
 		$this->load->model('Meal_model');
 		$user_id = $this->session->userdata('id');
 				
@@ -31,50 +30,42 @@ class Meal extends Controller {
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'host')):
 					// Set up data for view
 					$data['type'] = 'host';
-					$data['package'] = array(
-						'Seat you at your choice of table or booth.', 
-						'Provide menus.'
-						);
+					$data['package'] = 
+						$this->Meal_model->get_std_package($data['type']);
 					$data['add_services'] = 
-						$this->Meal_model->get_vendor_services('host');
+						$this->Meal_model->get_vendor_services($data['type']);
 					$data['vendors'] = 
-						$this->Meal_model->get_vendors('host');
+						$this->Meal_model->get_vendors($data['type']);
 					break;
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'waiter')):
 					// Set up data for view
 					$data['type'] = 'waiter';
-					$data['package'] = array(
-						'Take your order',
-						'Make sure your glass is full.',
-						'Bring you your order.'
-						);
+					$data['package'] = 
+						$this->Meal_model->get_std_package($data['type']);
 					$data['add_services'] = 
-						$this->Meal_model->get_vendor_services('waiter');
+						$this->Meal_model->get_vendor_services($data['type']);
 					$data['vendors'] = 
-						$this->Meal_model->get_vendors('waiter');
+						$this->Meal_model->get_vendors($data['type']);
 					break;
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'cook')):
 					// Set up data for view
 					$data['type'] = 'cook';
-					$data['package'] = array(
-						'Cook tonight’s meal.'
-						);
+					$data['package'] = 
+						$this->Meal_model->get_std_package($data['type']);
 					$data['add_services'] = 
-						$this->Meal_model->get_vendor_services('cook');
+						$this->Meal_model->get_vendor_services($data['type']);
 					$data['vendors'] = 
-						$this->Meal_model->get_vendors('cook');
+						$this->Meal_model->get_vendors($data['type']);
 					break;
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'busboy')):
 					// Set up data for view
 					$data['type'] = 'busboy';
-					$data['package'] = array(
-						'Clean up your mess.',
-						'Take the tip.'
-						);
+					$data['package'] = 
+						$this->Meal_model->get_std_package($data['type']);
 					$data['add_services'] = 
-						$this->Meal_model->get_vendor_services('busboy');
+						$this->Meal_model->get_vendor_services($data['type']);
 					$data['vendors'] = 
-						$this->Meal_model->get_vendors('busboy');
+						$this->Meal_model->get_vendors($data['type']);
 					break;
 			}
 		}
@@ -146,7 +137,7 @@ class Meal extends Controller {
 			$this->load->model('Meal_model');
 			
 			// check if they are trying to resubmit (i.e. reloading page)
-			if ($this->Meal_model->is_new_order($vendor_id))
+			if (!($order_id = $this->Meal_model->get_order_id($vendor_id)))
 			{
 				// make order
 				if ($order_id = $this->Meal_model->make_order($vendor_id))
@@ -166,8 +157,10 @@ class Meal extends Controller {
 			}
 			
 			// set up data to display
+			
+			$data = $this->Meal_model->get_order_details($order_id);
 		
-			$this->load->view('order');
+			$this->load->view('order', $data);
 		
 		}
 		
