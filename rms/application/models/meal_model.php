@@ -74,6 +74,36 @@ class Meal_model extends Model {
 			WHERE name = '$vendor_type')");
 		return $query->result();
 	}
+	
+	// get_vendors(string)
+	//
+	// @param (string) vendor type like 'host'
+	// @return (array of objects) from vendors tables with average rating
+	function get_vendors($vendor_type)
+	{
+		$query = $this->db->query("SELECT * FROM vendors WHERE type_id = 
+		(SELECT id FROM vendor_types WHERE name = '$vendor_type')");
+		return $query->result();
+	}
+	
+	// get vendor(int)
+	//
+	// @param (int) vendor id number
+	// @return (array) vendor info:
+	//   id, name, type_id, qualifications, price, user_id, deactive
+	// @return FALSE if vendor not found
+	function get_vendor($vendor_id)
+	{
+		$query = $this->db->query("SELECT * FROM vendors WHERE id = $vendor_id");
+		if ($query->num_rows() > 0)
+		{
+			return $query->row_array();
+		}
+		else // vendor not found
+		{
+			return false;
+		}
+	}
 
 }
 // End File classname.php

@@ -53,7 +53,7 @@ class Login extends Controller {
 			$this->session->set_userdata(array('logged_in' => true));			
 
 			//Login was successful	
-			// TODO: send to correct landing page		
+			// TODO: works now for guest, change to work for manager and vendor
 			redirect('/meal');
 			
 		}
@@ -104,9 +104,8 @@ class Login extends Controller {
 			
 			if ($this->_create($account, $user_data)) 
 			{
-				// TODO: login and get sent guest landing page
 				// could do some email activation stuff here but won't now
-				redirect('/');
+				redirect('/meal');
 			} 
 			else 
 			{

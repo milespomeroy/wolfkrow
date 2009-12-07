@@ -27,13 +27,19 @@ class Meal extends Controller {
 			switch (false)
 			{
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'host')):
+					// Set up data for view
 					$data['type'] = 'host';
 					$data['package'] = array(
 						'Seat you at your choice of table or booth.', 
 						'Provide menus.'
 						);
+					$data['add_services'] = 
+						$this->Meal_model->get_vendor_services('host');
+					$data['vendors'] = 
+						$this->Meal_model->get_vendors('host');
 					break;
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'waiter')):
+					// Set up data for view
 					$data['type'] = 'waiter';
 					$data['package'] = array(
 						'Take your order',
@@ -42,19 +48,31 @@ class Meal extends Controller {
 						);
 					$data['add_services'] = 
 						$this->Meal_model->get_vendor_services('waiter');
+					$data['vendors'] = 
+						$this->Meal_model->get_vendors('waiter');
 					break;
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'cook')):
+					// Set up data for view
 					$data['type'] = 'cook';
 					$data['package'] = array(
 						'Cook tonight’s meal.'
 						);
+					$data['add_services'] = 
+						$this->Meal_model->get_vendor_services('cook');
+					$data['vendors'] = 
+						$this->Meal_model->get_vendors('cook');
 					break;
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'busboy')):
+					// Set up data for view
 					$data['type'] = 'busboy';
 					$data['package'] = array(
 						'Clean up your mess.',
 						'Take the tip.'
 						);
+					$data['add_services'] = 
+						$this->Meal_model->get_vendor_services('busboy');
+					$data['vendors'] = 
+						$this->Meal_model->get_vendors('busboy');
 					break;
 			}
 		}
@@ -63,14 +81,44 @@ class Meal extends Controller {
 			// Set up new meal
 			$this->Meal_model->insert_new_meal($user_id);
 			
-			// Set vendor type to host to select that vendor
+			// Set data to host to view that vendor type selection page
 			$data['type'] = 'host';
+			$data['package'] = array(
+				'Seat you at your choice of table or booth.', 
+				'Provide menus.'
+				);
+			$data['add_services'] = 
+				$this->Meal_model->get_vendor_services('host');
+			$data['vendors'] = 
+				$this->Meal_model->get_vendors('host');
 		}
-		
+		// Load view with vendor type data generated from above
 		$this->load->view('select-vendor', $data);
-		
 	}
 	
+	
+	function vendor($vendor_id='')
+	{
+		// redirect to meal index if no vendor id given
+		if ($vendor_id == '')
+		{
+			redirect ('/meal');
+		}
+		
+		$this->load->model('Meal_model');
+		
+		// get vendor data for id given
+		if ($data = $this->Meal_model->get_vendor($vendor_id))
+		{
+			// load view for this vendor
+			$this->load->view('view-vendor', $data) ;
+		}
+		else // vendor not found
+		{
+			redirect ('/meal');
+		}
+		
+	}
 }
 // End File meal.php
 // File Source /system/application/controllers/meal.php

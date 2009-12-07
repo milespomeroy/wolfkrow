@@ -40,29 +40,22 @@
 	
 	<h2><?=ucwords($type)?></h2>
 	
+	<!-- TODO add ability to sort by factors
 	<label for="sort-by">Sort by:</label>
 	<select id="sort-by">
 		<option>Rating</option>
 		<option>Price</option>
-	</select>
-	
-	<form class="vendor" action="selected-vendor.html">
-		<img src="/images/wolfgang-puck.jpg" alt="Wolfgang Puck">
-		<h3><a href="view-vendor.html">Wolfgang Puck</a></h3>
-		<p>Available</p>
+	</select> 
+	-->
+	<?php foreach ($vendors as $vendor): ?>
+	<form class="vendor" action="">
+		<img src="/images/<?=$vendor->id?>.jpg" alt="<?=$vendor->name?>">
+		<h3><a href="/meal/vendor/<?=$vendor->id?>"><?=$vendor->name?></a></h3>
 		<p>Rating: ★★★☆☆</p>
-		<p>Price: $20</p>
-		<input type="submit" value="Select Wolfgang Puck">
+		<p>Price: $<?=$vendor->price?></p>
+		<input type="submit" value="Select <?=$vendor->name?>">
 	</form>
-
-	<form class="vendor" action="selected-vendor.html">
-		<img src="/images/ina.jpg" alt="Wolfgang Puck">
-		<h3><a href="view-vendor.html">Ina Garten</a></h3>
-		<p>Available</p>
-		<p>Rating: ★★☆☆☆</p>
-		<p>Price: $30</p>
-		<input type="submit" value="Select Ina Garten">
-	</form>
+	<?php endforeach; ?>
 	
 	<div id="footer">
 		&copy; Wolfkrow Diner 2009 | Software Project for AJE by Miles Pomeroy
