@@ -27,12 +27,15 @@
 	
 	<div id="additional">
 		<h2>Additional Services</h2>
+		
+		<?php foreach ($add_services as $serv): ?>
 	
-		<input type="checkbox" id="high-chair">
-		<label for="high-chair">High Chair</label>
-	
-		<input type="checkbox" id="dance">
-		<label for="dance">Do a Little Dance</label>
+		<input type="checkbox" id="serv-<?=$serv->id?>" name="serv-<?=$serv->id?>">
+		<label for="serv-<?=$serv->id?>">
+		<?=$serv->name?> ($<?=$serv->price?>)
+		</label>
+		
+		<?php endforeach; ?>
 	</div>	
 	
 	<h2><?=ucwords($type)?></h2>

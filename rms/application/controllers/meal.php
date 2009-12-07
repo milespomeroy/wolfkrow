@@ -40,6 +40,8 @@ class Meal extends Controller {
 						'Make sure your glass is full.',
 						'Bring you your order.'
 						);
+					$data['add_services'] = 
+						$this->Meal_model->get_vendor_services('waiter');
 					break;
 				case ($this->Meal_model->vendor_order_exists($meal_id, 'cook')):
 					$data['type'] = 'cook';

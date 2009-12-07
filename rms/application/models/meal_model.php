@@ -40,9 +40,9 @@ class Meal_model extends Model {
 			));
 	}
 	
-	// vendor_order_exists()
+	// vendor_order_exists(int, string)
 	// 
-	// @param1 (number) meal id
+	// @param1 (int) meal id
 	// @param2 (string) vendor type: host, waiter, cook, or busboy
 	// @return TRUE if order found
 	function vendor_order_exists($meal_id, $vendor_type)
@@ -60,6 +60,19 @@ class Meal_model extends Model {
 		{
 			return FALSE;
 		}
+	}
+	
+	// get_vendor_services(string)
+	//
+	// @param (string) vendor type like 'host' or 'waiter'
+	// @return (array of objects) each object has service info: 
+	//   id (int), name (string), description (string), (decimal) price
+	function get_vendor_services($vendor_type)
+	{
+		$query = $this->db->query("SELECT id, name, description, price 
+			FROM services WHERE vendor_type_id = (SELECT id FROM vendor_types 
+			WHERE name = '$vendor_type')");
+		return $query->result();
 	}
 
 }
