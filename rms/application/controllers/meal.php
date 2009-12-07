@@ -5,6 +5,8 @@
  **/
 class Meal extends Controller {
 
+	// figure out which part of the meal workflow you are at and then display
+	// that select vendor page
 	function index()
 	{
 		if(!$this->session->userdata('logged_in'))
@@ -96,7 +98,7 @@ class Meal extends Controller {
 		$this->load->view('select-vendor', $data);
 	}
 	
-	
+	// view vendor public listing using vendor id 
 	function vendor($vendor_id='')
 	{
 		// redirect to meal index if no vendor id given
@@ -117,6 +119,59 @@ class Meal extends Controller {
 		{
 			redirect ('/meal');
 		}
+		
+	}
+	
+	// make order, do transaction
+	function order()
+	{
+		if (!$this->session->userdata('logged_in'))
+		{
+			// not logged in. Na ah ah ah, you didn't say the magic word.
+			redirect('/');
+		}
+		
+		$this->load->library('form_validation');
+		
+		// rules in ../config/form_validation.php
+		if ($this->form_validation->run() == FALSE) // validate vendor id
+		{
+			// someone is hacking the code, log this
+			redirect('/meal');
+		}
+		else // vendor id validated 
+		{
+			$vendor_id = $this->input->post('vendor-id');
+			
+			$this->load->model('Meal_model');
+			
+			// check if they are trying to resubmit (i.e. reloading page)
+			if ($this->Meal_model->is_new_order($vendor_id))
+			{
+				// make order
+				if ($order_id = $this->Meal_model->make_order($vendor_id))
+				{
+					// make transaction
+					if (!$this->Meal_model->make_transaction($vendor_id, $order_id))
+					{
+						// log this error. Probably delete order if this happens.
+						echo "Transaction not successful.";
+					}
+				}
+				else
+				{
+					// log this error
+					echo "Order not successful.";
+				}
+			}
+			
+			// set up data to display
+		
+			$this->load->view('order');
+		
+		}
+		
+		
 		
 	}
 }

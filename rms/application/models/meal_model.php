@@ -115,6 +115,115 @@ class Meal_model extends Model {
 			return false;
 		}
 	}
+	
+	function is_new_order($vendor_id)
+	{
+		// get user id from session data
+		$user_id = $this->session->userdata('id');
+		
+		// get meal id from query
+		$mquery = $this->db->query("SELECT id FROM meals 
+			WHERE user_id = $user_id AND time_finished IS NULL");
+		$meal_id = $mquery->row()->id;
+		
+		// check for existing order
+		$query = $this->db->query("SELECT id FROM orders 
+			WHERE vendor_id = $vendor_id AND meal_id = $meal_id");
+	
+		if ($query->num_rows() > 0)
+		{
+			// have existing order
+			return false;
+		}
+		else
+		{
+			// no order found
+			return true;
+		}
+		
+	}
+	
+	// make_order(int)
+	// 
+	// @param (int) vendor id number
+	// @return order id OR FALSE if insertion failed
+	function make_order($vendor_id)
+	{
+		// get user id from session data
+		$user_id = $this->session->userdata('id');
+		
+		// get meal id from query
+		$mquery = $this->db->query("SELECT id FROM meals 
+			WHERE user_id = $user_id AND time_finished IS NULL");
+		$meal_id = $mquery->row()->id;
+		
+		// get price from vendor table
+		$pquery = $this->db->query("SELECT price FROM vendors 
+			WHERE id = $vendor_id");
+		$total_price = $pquery->row()->price;
+		
+		// set up array for insertion
+		$data = array(
+				'user_id' => $user_id,
+				'meal_id' => $meal_id,
+				'vendor_id' => $vendor_id,
+				'total_price' => $total_price
+			);
+		
+		// insert into orders table
+		if ($this->db->insert('orders', $data))
+		{
+			return $this->db->insert_id();
+		}
+		else // insertion failed
+		{
+			return false;
+		}
+		
+	}
+	
+	// make_transaction(int, int)
+	//
+	// @param1 vendor id number
+	// @param2 order id number
+	// @return TRUE/FALSE based on insertion success
+	function make_transaction($vendor_id, $order_id)
+	{
+		// get giver (user) account id from session data
+		$giver_account = $this->session->userdata('account_id');
+		
+		// get recipient (vendor) account id from query
+		$rquery = $this->db->query("SELECT account_id FROM users 
+			WHERE id = (SELECT user_id FROM vendors WHERE id = $vendor_id)");
+		$recipient_account = $rquery->row()->account_id;
+		
+		// get price paid from query
+		$pquery = $this->db->query("SELECT total_price FROM orders 
+			WHERE id = $order_id");
+		$amount = $pquery->row()->total_price;
+		
+		// get sale time from php date
+		$sale_time = date("Y-m-d H:i:s");
+		
+		// set up array for insertion
+		$data = array(
+			'giver_account' => $giver_account,
+			'recipient_account' => $recipient_account,
+			'order_id' => $order_id,
+			'amount' => $amount,
+			'sale_time' => $sale_time
+			);
+			
+		// insert into transactions table
+		if ($this->db->insert('transactions', $data))
+		{
+			return true;
+		}
+		else // insertion failed
+		{
+			return false;
+		}
+	}
 
 }
 // End File classname.php

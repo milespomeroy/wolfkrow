@@ -48,13 +48,20 @@
 	</select> 
 	-->
 	<?php foreach ($vendors as $vendor): ?>
-	<form class="vendor" action="">
+	<div class="vendor">
 		<img src="/images/<?=$vendor->id?>.jpg" alt="<?=$vendor->name?>">
 		<h3><a href="/meal/vendor/<?=$vendor->id?>"><?=$vendor->name?></a></h3>
 		<p>Rating: ★★★☆☆</p>
 		<p>Price: $<?=$vendor->price?></p>
-		<input type="submit" value="Select <?=$vendor->name?>">
-	</form>
+		
+		<form action="/meal/order" method="post">
+			<input type="hidden" name="vendor-id" value="<?=$vendor->id?>">
+			<!--
+				TODO Add additional services as hidden inputs using javascript
+			-->
+			<input type="submit" name="submit" value="Select <?=$vendor->name?>">
+		</form>
+	</div>
 	<?php endforeach; ?>
 	
 	<div id="footer">

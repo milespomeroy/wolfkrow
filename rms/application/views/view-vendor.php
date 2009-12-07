@@ -15,7 +15,9 @@
 	<p><img src="images/<?=$id?>.jpg" alt="<?=$name?>"></p>
 
 	Price: $<?=$price?><br>
-	Avg Rating: ★★★☆☆<br>
+	Avg Rating: ★★★☆☆<br> <!--
+		TODO Rating system
+	-->
 	Your Rating: ★★★★☆<br>
 	Currently Serving: <?=$orders?><br>
 	<h3>Qualifications:</h3>

@@ -29,5 +29,12 @@ $config = array(
 			'label'   => 'Password', 
 			'rules'   => 'trim|required'
 		)
+	),
+	'meal/order' => array (
+		array (
+			'field' => 'vendor-id',
+			'label' => 'Vendor Id',
+			'rules' => 'required|numeric'
+		)
 	)
 );
