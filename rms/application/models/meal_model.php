@@ -189,6 +189,13 @@ class Meal_model extends Model {
 				'vendor_id' => $vendor_id,
 				'total_price' => $total_price
 			);
+			
+		// set activated_date automatically if vendor type is host
+		$vendor_type = $this->get_vendor($vendor_id);
+		if ($vendor_type['type'] == 'host')
+		{
+			$data['activated_date'] = date("Y-m-d H:i:s");
+		}
 		
 		// insert into orders table
 		if ($this->db->insert('orders', $data))

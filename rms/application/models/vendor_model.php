@@ -18,7 +18,8 @@ class Vendor_model extends Model {
 	
 	function get_orders($vendor_id)
 	{
-		$query = $this->db->query("SELECT * FROM orders WHERE vendor_id = $vendor_id AND filled = 0");
+		$query = $this->db->query("SELECT * FROM orders 
+			WHERE vendor_id = $vendor_id AND filled = 0");
 		// working here
 	}
 
