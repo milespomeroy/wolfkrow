@@ -47,12 +47,12 @@
 				id="order-<?=$order['order_id']?>" name="orders[]" 
 				value="<?=$order['order_id']?>"></td>
 		</tr>
-	<?php endforeach; 
-	else: ?>
-	<p>No orders found.</p>
-	<?php endif; ?>
+	<?php endforeach; ?>
 
 	</table>
+	<?php else: ?>
+			<p>No orders found.</p>
+	<?php endif; ?>
 	</form>
 	
 	<h2>Net Revenue (10% of your gross goes to the restaurant)</h2>
