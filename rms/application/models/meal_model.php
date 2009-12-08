@@ -118,7 +118,7 @@ class Meal_model extends Model {
 		{
 			// orders up - for currently serving data
 			$oquery = $this->db->query("SELECT id FROM orders 
-				WHERE vendor_id = $vendor_id AND filled = 0");
+				WHERE vendor_id = $vendor_id AND filled IS NULL");
 
 			$data = $vquery->row_array();
 			$data['orders'] = $oquery->num_rows();

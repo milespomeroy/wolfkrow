@@ -25,15 +25,28 @@ class Vendor_model extends Model {
 	// and minutes the order has been active (mins_active)
 	function get_orders($vendor_id)
 	{
-		
 		$query = $this->db->query("SELECT orders.id AS order_id, 
 			users.full_name AS name, 
 			TIMESTAMPDIFF(MINUTE, orders.activated_date, NOW()) AS mins_active 
 			FROM orders, users WHERE orders.vendor_id = $vendor_id 
-			AND orders.filled = 0 AND orders.activated_date IS NOT NULL 
-			AND orders.user_id = users.id");
+			AND orders.filled IS NULL AND orders.activated_date IS NOT NULL 
+			AND orders.user_id = users.id ORDER BY mins_active DESC");
 			
 		return $query->result_array();
+	}
+	
+	// mark_as_filled(array)
+	//
+	// @param (array) order id numbers to be marked fulfilled
+	function mark_as_filled($orders)
+	{
+		$filled_time = date("Y-m-d H:i:s");
+		
+		foreach ($orders as $order)
+		{
+			$this->db->query("UPDATE orders SET filled = '{$filled_time}' 
+				WHERE id = $order");
+		}
 	}
 
 }

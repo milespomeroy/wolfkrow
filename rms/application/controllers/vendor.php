@@ -7,16 +7,10 @@ class Vendor extends Controller {
 	
 	function index()
 	{
-		// Check if logged in
-		if (!$this->session->userdata('logged_in'))
+		// Check if logged in and of vendor user type
+		if (!$this->_check_login())
 		{
 			// not logged in. Na ah ah ah, you didn't say the magic word.
-			redirect('/');
-		}
-		
-		// Check if vendor
-		if ($this->session->userdata('user_type') != 'vendor')
-		{
 			redirect('/');
 		}
 		
@@ -29,6 +23,49 @@ class Vendor extends Controller {
 		
 		$this->load->view('vendor-dashboard', $data);
 		
+	}
+	
+	function fill_orders()
+	{
+		// Check if logged in and of vendor user type
+		if (!$this->_check_login())
+		{
+			// not logged in. Na ah ah ah, you didn't say the magic word.
+			redirect('/');
+		}
+		
+		$this->load->model('Vendor_model');
+		
+		// send array of order id numbers to be marked as fulfilled
+		$this->Vendor_model->mark_as_filled($this->input->post('orders'));
+		
+		// mark next set active
+		
+		redirect('/vendor');
+
+	}
+	
+	// _check_login()
+	// internal function to check session data for being logged in and 
+	// that the user type is vendor
+	//
+	// @return TRUE if both are right, FALSE if either are wrong
+	function _check_login()
+	{
+		// Logged in?
+		if (!$this->session->userdata('logged_in'))
+		{
+			return false;
+		}
+		
+		// Check if vendor
+		if ($this->session->userdata('user_type') != 'vendor')
+		{
+			return false;
+		}
+		
+		// Yes logged in and yes you are a vendor
+		return true;
 	}
 
 }

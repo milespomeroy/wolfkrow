@@ -25,6 +25,8 @@
 	
 	<h2>Orders Up</h2>
 	
+	<form action="/vendor/fill_orders" method="post">
+		<input type="submit" value="Update Orders">
 	<table>
 		<tr>
 			<th>Name</th>
@@ -39,11 +41,14 @@
 		<tr>
 			<td><?=$order['name']?></td>
 			<td class="center"><?=$order['mins_active']?> minutes</td>
-			<td class="center"><input type="checkbox" id="order-<?=$order['order_id']?>"></td>
+			<td class="center"><input type="checkbox" 
+				id="order-<?=$order['order_id']?>" name="orders[]" 
+				value="<?=$order['order_id']?>"></td>
 		</tr>
 	<?php endforeach; ?>
 
 	</table>
+	</form>
 	
 	<h2>Net Revenue (10% of your gross goes to the restaurant)</h2>
 	
