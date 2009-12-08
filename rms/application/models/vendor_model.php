@@ -16,11 +16,24 @@ class Vendor_model extends Model {
 		return $query->row_array();
 	}
 	
+	// get_orders(string)
+	// get active orders for vendor dashboard
+	//
+	// @param (string) vendor id number
+	// @return (array of arrays)
+	// get order's id number (order_id), full name of customer (name)
+	// and minutes the order has been active (mins_active)
 	function get_orders($vendor_id)
 	{
-		$query = $this->db->query("SELECT * FROM orders 
-			WHERE vendor_id = $vendor_id AND filled = 0");
-		// working here
+		
+		$query = $this->db->query("SELECT orders.id AS order_id, 
+			users.full_name AS name, 
+			TIMESTAMPDIFF(MINUTE, orders.activated_date, NOW()) AS mins_active 
+			FROM orders, users WHERE orders.vendor_id = $vendor_id 
+			AND orders.filled = 0 AND orders.activated_date IS NOT NULL 
+			AND orders.user_id = users.id");
+			
+		return $query->result_array();
 	}
 
 }

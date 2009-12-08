@@ -31,18 +31,18 @@
 			<th>Time Active</th>
 			<th>Filled</th>
 		</tr>
-		
+	
+	<!--
+		TODO Refresh this periodically with javascript
+	-->
+	<?php foreach ($orders as $order): ?>
 		<tr>
-			<td>Miles Pomeroy</td>
-			<td class="center">3 days</td>
-			<td class="center"><input type="checkbox" id=""></td>
+			<td><?=$order['name']?></td>
+			<td class="center"><?=$order['mins_active']?> minutes</td>
+			<td class="center"><input type="checkbox" id="order-<?=$order['order_id']?>"></td>
 		</tr>
-		
-		<tr>
-			<td>John Doe</td>
-			<td class="center">3 minutes</td>
-			<td class="center"><input type="checkbox" id=""></td>
-		</tr>
+	<?php endforeach; ?>
+
 	</table>
 	
 	<h2>Net Revenue (10% of your gross goes to the restaurant)</h2>
