@@ -36,16 +36,34 @@ class Vendor_model extends Model {
 	}
 	
 	// mark_as_filled(array)
+	// also activate next order in the meal if one exists
 	//
 	// @param (array) order id numbers to be marked fulfilled
 	function mark_as_filled($orders)
 	{
-		$filled_time = date("Y-m-d H:i:s");
+		$current_time = date("Y-m-d H:i:s");
 		
 		foreach ($orders as $order)
 		{
-			$this->db->query("UPDATE orders SET filled = '{$filled_time}' 
+			// set filled time
+			$this->db->query("UPDATE orders SET filled = '{$current_time}' 
 				WHERE id = $order");
+			
+			// see if there is another order in the meal to activate
+			$query = $this->db->query("SELECT id FROM orders 
+			WHERE meal_id = (SELECT id FROM meals 
+			WHERE user_id = (SELECT user_id FROM orders WHERE id = $order)
+			AND time_finished IS NULL) AND activated_date IS NULL LIMIT 1");
+			
+			if ($query->num_rows() > 0)
+			{
+				$id_to_activate = $query->row()->id;
+				
+				// activate next order
+				$this->db->query("UPDATE orders SET 
+					activated_date = '{$current_time}' 
+					WHERE id = $id_to_activate");
+			}
 		}
 	}
 

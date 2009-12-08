@@ -39,8 +39,6 @@ class Vendor extends Controller {
 		// send array of order id numbers to be marked as fulfilled
 		$this->Vendor_model->mark_as_filled($this->input->post('orders'));
 		
-		// mark next set active
-		
 		redirect('/vendor');
 
 	}
