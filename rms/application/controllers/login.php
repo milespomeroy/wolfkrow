@@ -30,7 +30,7 @@ class Login extends Controller {
 			$row = $this->login_model->get_user($email);
 			
 			//Check against password
-			if(md5($password) != $row['password']) 
+			if (md5($password) != $row['password']) 
 			{
 				// Wrong password
 				// TODO: show some message for wrong password
@@ -52,10 +52,20 @@ class Login extends Controller {
 			//Set logged_in to true
 			$this->session->set_userdata(array('logged_in' => true));			
 
-			//Login was successful	
-			// TODO: works now for guest, change to work for manager and vendor
-			redirect('/meal');
-			
+			// Login was successful	
+			// Switchboard to send to page depending on user type
+			switch ($row['user_type'])
+			{
+				case 'vendor':
+					redirect('/vendor');
+					break;
+				case 'manager':
+					redirect('/admin');
+					break;
+				default:
+					redirect('/meal');
+			}
+	
 		}
 	}
 	

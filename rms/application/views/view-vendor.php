@@ -10,7 +10,11 @@
 
 	<h1><?=$name?> — <?=ucwords($type)?></h1>
 	
+	<?php if ($this->session->userdata('user_type') == 'vendor'): ?>
+	<p><a href="/vendor">&laquo; Back to Dashboard</a></p>
+	<?php else: ?>
 	<p><a href="/meal">&laquo; Back to Vendor List</a></p>
+	<?php endif; ?>
 
 	<p><img src="images/<?=$id?>.jpg" alt="<?=$name?>"></p>
 
