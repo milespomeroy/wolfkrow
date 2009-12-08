@@ -16,10 +16,12 @@ class Vendor extends Controller {
 		
 		$this->load->model('Vendor_model');
 		
+		$v_user_id = $this->session->userdata('id');
+		
 		// need: vendor_name, vendor_id, orders, revenue
-		$data = $this->Vendor_model->get_vendor($this->session->userdata('id'));
+		$data = $this->Vendor_model->get_vendor($v_user_id);
 		$data['orders'] = $this->Vendor_model->get_orders($data['vendor_id']);
-		//$data['revenue'] = $this->Vendor_model->get_revenue();
+		$data['revenue'] = $this->Vendor_model->get_revenue($v_user_id);
 		
 		$this->load->view('vendor-dashboard', $data);
 		

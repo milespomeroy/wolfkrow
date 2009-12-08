@@ -55,13 +55,15 @@
 	<?php endif; ?>
 	</form>
 	
-	<h2>Net Revenue (10% of your gross goes to the restaurant)</h2>
+	<h2>Gross Revenue (10% of your gross goes to the restaurant)</h2>
 	
 	<p>
-		Today: $20<br>
-		Yesterday: $50<br>
-		Week to date: $1000<br>
-		Month to date: $1234
+		Today (so far): 
+		$<?php echo $revenue['today'] == NULL ? '0.00' : $revenue['today'] ?>
+		<br>
+		Yesterday: $
+		<?php echo $revenue['yesterday'] == NULL ? '0.00' : $revenue['yesterday']?>
+		<br>
 	</p>
 	
 	<div id="footer">

@@ -35,6 +35,31 @@ class Vendor_model extends Model {
 		return $query->result_array();
 	}
 	
+	// get_revenue(string)
+	//
+	// @param user id number of vendor
+	// @return (array) today => decimal, yesterday => decimal
+	function get_revenue($user_id)
+	{
+		// today
+		$tquery = $this->db->query("SELECT SUM(amount) AS today 
+			FROM transactions WHERE recipient_account = 
+			(SELECT account_id FROM users WHERE id = $user_id) 
+			AND DATE(sale_time) = CURRENT_DATE()"); 
+		
+		$rev['today'] = $tquery->row()->today;
+			
+		// yesterday
+		$yquery = $this->db->query("SELECT SUM(amount) AS yesterday 
+			FROM transactions WHERE recipient_account = 
+			(SELECT account_id FROM users WHERE id = $user_id) 
+			AND DATE(sale_time) = SUBDATE(CURRENT_DATE, 1)");
+			
+		$rev['yesterday'] = $yquery->row()->yesterday;
+		
+		return $rev;
+	}
+	
 	// mark_as_filled(array)
 	// also activate next order in the meal if one exists
 	//
