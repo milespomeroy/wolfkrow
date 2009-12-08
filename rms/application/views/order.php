@@ -10,7 +10,7 @@
 	
 	<h1>You’ve Selected <?=$vendor_name?></h1>
 	
-	<img src="/images/<?=$vendor_id?>.jpg" alt="Wolfgang Puck" style="float:right;">
+	<img src="/images/<?=$vendor_id?>.jpg" alt="<?=$vendor_name?>" style="float:right;">
 	<p>Thank you for selecting <?=$vendor_name?> as your <?=$vendor_type?> 
 		for tonight. <?=$vendor_name?> will be with you momentarily.</p>
 	

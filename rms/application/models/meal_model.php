@@ -190,9 +190,12 @@ class Meal_model extends Model {
 				'total_price' => $total_price
 			);
 			
-		// set activated_date automatically if vendor type is host
-		$vendor_type = $this->get_vendor($vendor_id);
-		if ($vendor_type['type'] == 'host')
+		// set as active if no active, non-filled order for meal
+		$aquery = $this->db->query("SELECT id FROM orders 
+			WHERE meal_id = $meal_id 
+			AND activated_date IS NOT NULL 
+			AND filled IS NULL");
+		if ($aquery->num_rows() == 0)
 		{
 			$data['activated_date'] = date("Y-m-d H:i:s");
 		}

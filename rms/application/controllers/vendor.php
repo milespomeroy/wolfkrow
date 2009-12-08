@@ -36,11 +36,14 @@ class Vendor extends Controller {
 		
 		$this->load->model('Vendor_model');
 		
-		// send array of order id numbers to be marked as fulfilled
-		$this->Vendor_model->mark_as_filled($this->input->post('orders'));
+		// send array of order ids (if there are any selected)
+		// mark as fulfilled and mark next order (if exists) as active
+		if ($orders = $this->input->post('orders'))
+		{
+			$this->Vendor_model->mark_as_filled($orders);
+		}
 		
 		redirect('/vendor');
-
 	}
 	
 	// _check_login()

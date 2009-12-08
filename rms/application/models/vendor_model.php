@@ -53,7 +53,8 @@ class Vendor_model extends Model {
 			$query = $this->db->query("SELECT id FROM orders 
 			WHERE meal_id = (SELECT id FROM meals 
 			WHERE user_id = (SELECT user_id FROM orders WHERE id = $order)
-			AND time_finished IS NULL) AND activated_date IS NULL LIMIT 1");
+			AND time_finished IS NULL) AND activated_date IS NULL 
+			ORDER BY id LIMIT 1");
 			
 			if ($query->num_rows() > 0)
 			{
