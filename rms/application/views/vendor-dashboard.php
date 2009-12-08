@@ -27,6 +27,8 @@
 	
 	<form action="/vendor/fill_orders" method="post">
 		<input type="submit" value="Update Orders">
+	
+	<?php if (count($orders) > 0): ?>
 	<table>
 		<tr>
 			<th>Name</th>
@@ -45,7 +47,10 @@
 				id="order-<?=$order['order_id']?>" name="orders[]" 
 				value="<?=$order['order_id']?>"></td>
 		</tr>
-	<?php endforeach; ?>
+	<?php endforeach; 
+	else: ?>
+	<p>No orders found.</p>
+	<?php endif; ?>
 
 	</table>
 	</form>
