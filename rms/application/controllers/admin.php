@@ -40,6 +40,23 @@ class Admin extends Controller {
 		
 	}
 	
+	function offer()
+	{
+		// Check if logged in and of vendor user type
+		if (!$this->_check_login())
+		{
+			// not logged in. Na ah ah ah, you didn't say the magic word.
+			redirect('/');
+		}
+		
+		$this->load->model('Admin_model');
+		
+		$this->Admin_model->make_offer($this->input->post('offer'), 
+			$this->input->post('app-id'));
+		
+		redirect('/admin/applications');
+	}
+	
 	// _check_login()
 	// internal function to check session data for being logged in and 
 	// that the user type is manager

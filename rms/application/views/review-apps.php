@@ -28,7 +28,7 @@
 			<?php echo nl2br($vendor->vendor_qualifications); ?>
 		</p>
 		
-		<form action="/meal/order" method="post">
+		<form action="/admin/offer" method="post">
 			<input type="hidden" name="app-id" value="<?=$vendor->id?>">
 			<input type="submit" name="offer" value="Hire">
 			<input type="submit" name="offer" value="Deny">

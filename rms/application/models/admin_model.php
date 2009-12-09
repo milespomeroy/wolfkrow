@@ -26,6 +26,18 @@ class Admin_model extends Model {
 		}
 	}
 
+	// make_offer(string, int)
+	//
+	// @param1 (string) the offer (Hire or Fire)
+	// @param2 (int) vendor application id number
+	// @return TRUE/FALSE query status
+	function make_offer($offer, $app_id)
+	{
+		$offer_date = date("Y-m-d H:i:s");
+		$data = array('offer' => $offer, 'offer_date' => $offer_date);
+		$this->db->where('id', $app_id);
+		return $this->db->update('vendor_applications', $data);
+	}
 }
 // End File admin_model.php
 // File Source /system/application/models/admin_model.php
