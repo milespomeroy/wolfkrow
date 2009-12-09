@@ -7,6 +7,12 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
 </head>
 <body>
+	
+	<?php if($this->session->userdata('logged_in')): ?>
+	<div class="logout" >
+	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>
+	</div>
+	<?php endif; ?>
 
 	<h1><?=$name?> — <?=ucwords($type)?></h1>
 	

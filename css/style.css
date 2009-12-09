@@ -1,4 +1,4 @@
-/* @override http://rms.site/style.css */
+/* @override http://rms.site/css/style.css */
 
 /* @group Reset */
 
@@ -280,6 +280,14 @@ fieldset#signin p {
 
 .vendor img {
 	float: right;
+}
+
+/* Logout */
+
+.logout {
+	position: absolute;
+	top: 0;
+	right: 26px;
 }
 
 /* Footer */

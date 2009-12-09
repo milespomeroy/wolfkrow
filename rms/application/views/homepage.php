@@ -11,24 +11,22 @@
 	<!--
 		TODO You can do better than this. Replace login form if logged in.
 	-->
-	<div id="status">
-	<?php if($this->session->userdata('logged_in')) 
-		{
-			echo $this->session->userdata('email') . '(' .
-			$this->session->userdata('user_type') . ')' .
-			' <a href="/login/logout">Logout</a>';
-		} 
-		else 
-		{
-			echo '<a href="/">Login</a>';
-		}
-	?>
+	
+	<?php if($this->session->userdata('logged_in')): ?>
+	<div class="logout" >
+	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>
 	</div>
+	<?php endif; ?>
 	
 	<h1>Welcome to Wolfkrow Diner</h1>
 	
 	<fieldset id="signin">
 		<h2>Login</h2>
+		<?php if ($this->session->userdata('logged_in')): ?>
+			<p>
+			Already logged in. <a href="/login/switchboard">Get in there.</a>
+			</p>
+		<?php else: ?>
 		<?php echo validation_errors(); ?>
 		<form action="" method="post">
 			
@@ -43,6 +41,7 @@
 			
 			<p><a href="/login/signup">First time here?</a></p>
 		</form>
+		<?php endif; ?>
 	</fieldset>
 	
 	<h2 id="menu">Today’s Menu</h2>

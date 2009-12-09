@@ -52,20 +52,31 @@ class Login extends Controller {
 			//Set logged_in to true
 			$this->session->set_userdata(array('logged_in' => true));			
 
-			// Login was successful	
-			// Switchboard to send to page depending on user type
-			switch ($row['user_type'])
-			{
-				case 'vendor':
-					redirect('/vendor');
-					break;
-				case 'manager':
-					redirect('/admin');
-					break;
-				default:
-					redirect('/meal');
-			}
+			// Login was successful	send to switchboard
+			$this->switchboard();
+		}
+	}
 	
+	function switchboard()
+	{
+		// check if already logged in
+		if (!$this->session->userdata('logged_in'))
+		{
+			// send home
+			redirect('/');
+		}
+		
+		// Switchboard to send to page depending on user type
+		switch ($this->session->userdata('user_type'))
+		{
+			case 'vendor':
+				redirect('/vendor');
+				break;
+			case 'manager':
+				redirect('/admin');
+				break;
+			default:
+				redirect('/meal');
 		}
 	}
 	

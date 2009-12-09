@@ -8,6 +8,10 @@
 </head>
 <body>
 	
+	<div class="logout" >
+	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>
+	</div>
+	
 	<h1><?=$vendor_name?>’s Dashboard</h1>
 	
 	<ul>

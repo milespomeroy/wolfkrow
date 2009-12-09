@@ -7,6 +7,10 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
 </head>
 <body>
+	
+	<div class="logout" >
+	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>
+	</div>
 
 	<h1>Select a <?=ucwords($type)?></h1>
 

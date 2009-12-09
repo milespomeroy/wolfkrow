@@ -8,6 +8,10 @@
 </head>
 <body>
 	
+	<div class="logout" >
+	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>
+	</div>
+	
 	<h1>You’ve Selected <?=$vendor_name?></h1>
 	
 	<img src="/images/<?=$vendor_id?>.jpg" alt="<?=$vendor_name?>" style="float:right;">
