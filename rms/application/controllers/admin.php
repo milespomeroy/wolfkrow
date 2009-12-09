@@ -10,14 +10,9 @@ class Admin extends Controller {
 	function index()
 	{
 		// Check if logged in and of vendor user type
-		if (!$this->_check_login())
-		{
-			// not logged in. Na ah ah ah, you didn't say the magic word.
-			redirect('/');
-		}
+		$this->_check_login();
 		
 		$this->load->view('admin-dash');
-		
 	}
 	
 	// applications()
@@ -25,11 +20,7 @@ class Admin extends Controller {
 	function applications()
 	{
 		// Check if logged in and of vendor user type
-		if (!$this->_check_login())
-		{
-			// not logged in. Na ah ah ah, you didn't say the magic word.
-			redirect('/');
-		}
+		$this->_check_login();
 		
 		$this->load->model('Admin_model');
 		
@@ -43,11 +34,7 @@ class Admin extends Controller {
 	function offer()
 	{
 		// Check if logged in and of vendor user type
-		if (!$this->_check_login())
-		{
-			// not logged in. Na ah ah ah, you didn't say the magic word.
-			redirect('/');
-		}
+		$this->_check_login();
 		
 		$this->load->model('Admin_model');
 		
@@ -61,23 +48,22 @@ class Admin extends Controller {
 	// internal function to check session data for being logged in and 
 	// that the user type is manager
 	//
-	// @return TRUE if both are right, FALSE if either are wrong
+	// redirects if not logged in or not a manager
 	function _check_login()
 	{
 		// Logged in?
 		if (!$this->session->userdata('logged_in'))
 		{
-			return false;
+			// not logged in. Na ah ah ah, you didn't say the magic word.
+			redirect('/');
 		}
 		
 		// Check if vendor
 		if ($this->session->userdata('user_type') != 'manager')
 		{
-			return false;
+			redirect('/');
 		}
 		
-		// Yes logged in and yes you are a vendor
-		return true;
 	}
 
 }
