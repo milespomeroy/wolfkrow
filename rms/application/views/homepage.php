@@ -61,6 +61,10 @@
 	<p>In the town of Wolfkrow there is just one restaurant, called the Wolfkrow Diner, for its 10000 inhabitants. Like most restaurants, patrons of Wolfkrow Diner come into the restaurant and find a hostess who will seat them, order from a menu, eat, and leave. Unlike other restaurants, Wolfkrow Diner doesn't employ anyone but a manager for the thousands of meals served each day. </p>
 	<p>A major difference between Wolfkrow Diner and normal restaurants is that patrons pay for each person that helps them individually. At the stage when a host greets the patron, the patron selects one of several hosts based on their hosting ability and their fee and pays right then. Next when a waiter seats the patron, the patron selects one of several waiters based on their ability and appearance, and they pay for the waiter to seat them. </p>
 	
+	<ul>
+		<li><a href="/vendor/apply">Apply to become a vendor.</a></li>
+	</ul>
+	
 	<div id="footer">
 		&copy; Wolfkrow Diner 2009 | Software Project for AJE by Miles Pomeroy
 	</div>

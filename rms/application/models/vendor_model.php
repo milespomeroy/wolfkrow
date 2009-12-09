@@ -92,6 +92,36 @@ class Vendor_model extends Model {
 			}
 		}
 	}
+	
+	// app_exists(string)
+	// check if a vendor application exists for an email
+	//
+	// @param (string) email address
+	// @return TRUE if application does exists already for that email
+	function app_exists($email)
+	{
+		$query = $this->db->query("SELECT id FROM vendor_applications 
+			WHERE email = '{$email}'");
+		
+		if ($query->num_rows() > 0)
+		{
+			return true; // application already exists for this email
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	// insert_app(array)
+	// insert application data into vendor_applications table
+	//
+	// @param (array) data to be inserted with keys matching column names
+	// @return TRUE/FALSE correlating with insertion status
+	function insert_app($app)
+	{
+		return $this->db->insert('vendor_applications', $app);
+	}
 
 }
 // End File vendor_model.php

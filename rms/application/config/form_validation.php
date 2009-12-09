@@ -36,5 +36,32 @@ $config = array(
 			'label' => 'Vendor Id',
 			'rules' => 'required|numeric'
 		)
+	),
+	'vendor/apply' => array (
+		array (
+			'field' => 'full-name',
+			'label' => 'Full Name',
+			'rules' => 'trim|required|max_length[50]'
+		),
+		array (
+			'field' => 'email',
+			'label' => 'Email',
+			'rules' => 'trim|required|valid_email'
+		),
+		array (
+			'field' => 'vendor-name',
+			'label' => 'Vendor Name',
+			'rules' => 'trim|required|max_length[50]'
+		),
+		array (
+			'field' => 'type-id',
+			'label' => 'Vendor Type',
+			'rules' => 'required|is_natural'
+		),
+		array (
+			'field' => 'qualifications',
+			'label' => 'Qualifications',
+			'rules' => 'trim|required'
+		)
 	)
 );

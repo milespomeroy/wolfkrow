@@ -5,6 +5,8 @@
  **/
 class Vendor extends Controller {
 	
+	// index()
+	// Vendor Dashboard
 	function index()
 	{
 		// Check if logged in and of vendor user type
@@ -27,6 +29,8 @@ class Vendor extends Controller {
 		
 	}
 	
+	// fill_orders()
+	// used by the vendor dashboard to mark orders as fulfilled
 	function fill_orders()
 	{
 		// Check if logged in and of vendor user type
@@ -46,6 +50,52 @@ class Vendor extends Controller {
 		}
 		
 		redirect('/vendor');
+	}
+	
+	// apply()
+	// applications for becoming a vendor
+	function apply()
+	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<p class="error">', 
+			'</p>');
+				
+		// rules in ../config/form_validation.php
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('vendor-app');
+		}
+		else // validation success, form submission go
+		{
+			$this->load->model('Vendor_model');
+			
+			// check for existing application TODO: give feedback
+			if ($this->Vendor_model->app_exists($this->input->post('email')))
+			{
+				$this->load->view('vendor-app-submit');
+			}
+			else // new application
+			{
+				// set up array for insertion into vendor_applications table
+				$v_app = array (
+						'full_name' => $this->input->post('full-name'),
+						'email' => $this->input->post('email'),
+						'vendor_name' => $this->input->post('vendor-name'),
+						'vendor_type_id' => $this->input->post('type-id'),
+						'vendor_qualifications' => $this->input->post('qualifications')
+					);
+				
+				if ($this->Vendor_model->insert_app($v_app))
+				{
+					$this->load->view('vendor-app-submit');
+				}
+				else
+				{
+					echo "Problem with the database. Go back and try again.";
+				}
+			}
+		}
+		
 	}
 	
 	// _check_login()
