@@ -1,2 +1,4 @@
 syntax = glob
 .DS_Store
+rms/application/config/database.php
+rms/application/config/config.php

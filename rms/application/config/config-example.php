@@ -324,6 +324,16 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
+/*
+|--------------------------------------------------------------------------
+| Vendor Application Pass Phrase
+|--------------------------------------------------------------------------
+|
+| Change this if you want the application activation process to be more
+| secure. Used for making the hash for the vendor activation link.
+|
+*/
+$config['app_pass_phase'] = 'Change this if you want higher security';
 
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */
