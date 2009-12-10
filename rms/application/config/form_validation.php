@@ -63,5 +63,42 @@ $config = array(
 			'label' => 'Qualifications',
 			'rules' => 'trim|required'
 		)
+	),
+	'vendor_activate' => array (
+		array (
+			'field' => 'full-name',
+			'label' => 'Full Name',
+			'rules' => 'trim|required|max_length[50]|xss_clean'
+		),
+		array (
+			'field'   => 'email', 
+			'label'   => 'Email', 
+			'rules'   => 'trim|required|max_length[50]|valid_email|callback__check_existing_email'
+		),
+		array (
+			'field'   => 'password', 
+			'label'   => 'Password', 
+			'rules'   => 'trim|required'
+		),
+		array (
+			'field' => 'vendor-name',
+			'label' => 'Vendor Name',
+			'rules' => 'trim|required|max_length[50]'
+		),
+		array (
+			'field' => 'type-id',
+			'label' => 'Vendor Type',
+			'rules' => 'required|is_natural'
+		),
+		array (
+			'field' => 'qualifications',
+			'label' => 'Qualifications',
+			'rules' => 'trim|required'
+		),
+		array (
+			'field' => 'price',
+			'label' => 'Price',
+			'rules' => 'trim|required|numeric'
+		)
 	)
 );

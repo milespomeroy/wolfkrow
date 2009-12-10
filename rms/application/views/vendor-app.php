@@ -14,7 +14,7 @@
 	<?php echo validation_errors(); ?>
 
 	<fieldset>
-	<form action="" method="post" enctype="multipart/form-data">
+	<form action="" method="post">
 		<label for="full-name">Full Name:</label>
 		<input type="text" name="full-name" id="full-name" value="<?= 
 			set_value('full-name')?>">
@@ -27,7 +27,7 @@
 		
 		<label for="vendor-name">Vendor Name:</label>
 		<input type="text" id="vendor-name" name="vendor-name" value="<?= 
-			set_value('full-name')?>">
+			set_value('vendor-name')?>">
 		
 		<!--
 			TODO Auto generate type list from database

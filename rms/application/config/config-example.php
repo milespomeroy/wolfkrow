@@ -333,7 +333,7 @@ $config['proxy_ips'] = '';
 | secure. Used for making the hash for the vendor activation link.
 |
 */
-$config['app_pass_phase'] = 'Change this if you want higher security';
+$config['app_pass_phrase'] = 'Change this if you want higher security';
 
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */

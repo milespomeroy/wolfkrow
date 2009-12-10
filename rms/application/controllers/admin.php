@@ -31,6 +31,8 @@ class Admin extends Controller {
 		
 	}
 	
+	// offer()
+	// post 'offer' (Hire/Deny) and 'app-id' application id number
 	function offer()
 	{
 		// Check if logged in and of vendor user type

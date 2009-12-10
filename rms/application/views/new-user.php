@@ -31,28 +31,30 @@
 		
 		<hr>
 		
+		<p><em>Credit Card info disabled for demo.</em></p>
+
 		<label for="credit-card">Credit Card #:</label>
-		<input type="text" name="credit-card" id="credit-card" value="demo">
-		
-		<select id="cc-type" name="cc-type">
+		<input type="text" name="credit-card" id="credit-card" value="demo" disabled>
+
+		<select id="cc-type" name="cc-type" disabled>
 			<option value="visa">Visa</option>
 			<option value="mastercard">MasterCard</option>
 		</select>
-		
+
 		<label for="security-code">Security Code:</label>
-		<input type="text" name="security-code" id="security-code" value="000">
-		
+		<input type="text" name="security-code" id="security-code" value="000" disabled>
+
 		<label for="name-card">Name on Card:</label>
-		<input type="text" name="name-card" id="name-card" value="demo name">
-		
+		<input type="text" name="name-card" id="name-card" value="demo name" disabled>
+
 		<label for="billing-add">Billing Address:</label>
-		<textarea name="billing-add" id="billing-add" cols="30" rows="5">123 address</textarea>
-		
+		<textarea name="billing-add" id="billing-add" cols="30" rows="5" disabled>123 address</textarea>
+
 		<label for="exp-date-month">Expiration Date:</label>
-		<select name="exp-date-month" id="exp-date-month">
+		<select name="exp-date-month" id="exp-date-month" disabled>
 			<option>12</option>
 		</select>
-		<select name="exp-date-year" id="exp-date-year">
+		<select name="exp-date-year" id="exp-date-year" disabled>
 			<option>2010</option>
 		</select>
 		

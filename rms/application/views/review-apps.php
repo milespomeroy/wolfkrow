@@ -16,9 +16,12 @@
 	
 	<ul>
 		<li><a href="/admin">&laquo; Back to Dashboard</a></li>
+		<li>
+			<a href="/vendor/demo_act" class="error">View Activation Links</a>
+		</li>
 	</ul>
 
-	<?php if (isset($vendors)): ?>
+	<?php if ($vendors): ?>
 	<?php foreach ($vendors as $vendor): ?>
 	<div class="vendor">
 		<h3><?=$vendor->vendor_name?></h3>
@@ -35,6 +38,8 @@
 		</form>
 	</div>
 	<?php endforeach; ?>
+	<?php else: ?>
+		<p><em>No vendor applications to review at this time.</em></p>
 	<?php endif; ?>
 	
 	<div id="footer">

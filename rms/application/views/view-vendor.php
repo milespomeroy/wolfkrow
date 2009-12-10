@@ -22,7 +22,7 @@
 	<p><a href="/meal">&laquo; Back to Vendor List</a></p>
 	<?php endif; ?>
 
-	<p><img src="images/<?=$id?>.jpg" alt="<?=$name?>"></p>
+	<p><img src="/images/<?=$id?>.jpg" alt="<?=$name?>"></p>
 
 	Price: $<?=$price?><br>
 	Avg Rating: ★★★☆☆<br> <!--

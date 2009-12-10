@@ -122,6 +122,65 @@ class Vendor_model extends Model {
 	{
 		return $this->db->insert('vendor_applications', $app);
 	}
+	
+	// get_hired_app()
+	// get the vendor applications that have been marked as 'Hire' by the 
+	// manager
+	//
+	// @return array of objects: app_id, vendor_name, type_name, email
+	function get_hired_apps()
+	{
+		$query = $this->db->query("SELECT vendor_applications.id AS app_id, 
+			vendor_name, vendor_types.name AS type_name, email
+			FROM vendor_applications, vendor_types WHERE offer = 'Hire' 
+			AND activated IS NULL 
+			AND vendor_applications.vendor_type_id = vendor_types.id");
+			
+		if ($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		return false;
+	}
+	
+	// get_application(int)
+	// get a specific application from the vendor_applications table using id
+	//
+	// @param id number of application
+	// @return row as object
+	function get_application($app_id)
+	{
+		$query = 
+		$this->db->get_where('vendor_applications', array('id' => $app_id, 
+			'activated' => NULL), 1);
+		
+		if ($query->num_rows() > 0)
+		{
+			return $query->row();
+		}
+		return false; // not found
+	}
+	
+	// insert_vendor(array)
+	//
+	// @param array with all the info needed to insert into the vendors table
+	// @return vendor id, FALSE if no insertion happened
+	function insert_vendor($vendor)
+	{
+		$this->db->set($vendor);
+		if (!$this->db->insert('vendors'))
+		{
+			return false;
+		}
+		return $this->db->insert_id();
+	}
+	
+	function mark_app_activated($app_id)
+	{
+		$act_date = date("Y-m-d H:i:s");
+		$this->db->query("UPDATE vendor_applications SET activated = '{$act_date}' 
+			WHERE id = $app_id");
+	}
 
 }
 // End File vendor_model.php
