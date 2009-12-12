@@ -24,7 +24,20 @@
 		<h2>Login</h2>
 		<?php if ($this->session->userdata('logged_in')): ?>
 			<p>
-			Already logged in. <a href="/login/switchboard">Get in there.</a>
+			Already logged in. <a href="/login/switchboard"><?php
+			switch ($this->session->userdata('user_type'))
+			{
+				case ('manager'):
+					echo "Admin Dashboard.";
+					break;
+				case ('vendor'):
+					echo "Go to your dashboard.";
+					break;
+				default:
+					echo "See your current meal status.";
+					break;
+			}
+			?></a>
 			</p>
 		<?php else: ?>
 		<?php echo validation_errors(); ?>
