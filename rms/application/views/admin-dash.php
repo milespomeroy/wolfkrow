@@ -16,6 +16,7 @@
 	
 	<ul>
 		<li><a href="/admin/applications">Review Vendor Applications</a></li>
+		<li><a href="/admin/fees">Edit Transaction Fees</a></li>
 	</ul>
 	
 	<h2>Revenue</h2>

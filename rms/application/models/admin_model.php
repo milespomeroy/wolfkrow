@@ -38,6 +38,31 @@ class Admin_model extends Model {
 		$this->db->where('id', $app_id);
 		return $this->db->update('vendor_applications', $data);
 	}
+	
+	// get_fees()
+	//
+	// @return array of objects: type_id, vendor_type, percent_fee
+	function get_fees()
+	{
+		$query = $this->db->query("SELECT id AS type_id, 
+			name AS vendor_type, percent_fee 
+			FROM vendor_types ORDER BY workflow_order");
+		return $query->result();
+	}
+	
+	// set_fees(array)
+	//
+	// @param array of fees to be changed as an array of fields:
+	//   type_id, fee
+	function set_fees($fees)
+	{
+		foreach ($fees as $fee)
+		{
+			$this->db->set('percent_fee', $fee['fee']);
+			$this->db->where('id', $fee['type_id']);
+			$this->db->update('vendor_types');
+		}
+	}
 }
 // End File admin_model.php
 // File Source /system/application/models/admin_model.php
