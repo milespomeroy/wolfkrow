@@ -59,7 +59,7 @@
 	<?php endif; ?>
 	</form>
 	
-	<h2>Gross Revenue (10% of your gross goes to the restaurant)</h2>
+	<h2>Revenue</h2>
 	
 	<p>
 		Today (so far): 

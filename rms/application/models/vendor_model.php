@@ -39,11 +39,12 @@ class Vendor_model extends Model {
 	//
 	// @param order id number
 	// @return object of fields from the orders table for that order id number
-	//  and vendor_type
+	//  and vendor_type and percent_fee for vendor
 	function get_order($order_id)
 	{
 		$query = $this->db->query("SELECT orders.*, 
-			vendor_types.name AS vendor_type 
+			vendor_types.name AS vendor_type, 
+			vendor_types.percent_fee AS percent_fee 
 			FROM orders, vendors, vendor_types 
 			WHERE orders.id = $order_id AND orders.vendor_id = vendors.id 
 			AND vendors.type_id = vendor_types.id");
@@ -89,7 +90,8 @@ class Vendor_model extends Model {
 			// make transactions, i.e. payments for services
 			$order_r = $this->get_order($order);
 			$this->make_transactions($order_r->id, $order_r->user_id, 
-				$order_r->vendor_id, $order_r->total_price);
+				$order_r->vendor_id, $order_r->total_price, 
+				$order_r->percent_fee);
 			
 			// set filled time (READ: mark filled)
 			$this->db->query("UPDATE orders SET filled = '{$current_time}' 
@@ -128,37 +130,55 @@ class Vendor_model extends Model {
 	
 	// make_transactions(int, int)
 	//
-	// @params order_id, guest_id, vendor_id, price
+	// @params order_id, guest_id, vendor_id, price, percent_fee
 	// @return TRUE/FALSE based on insertion success
-	function make_transactions($order_id, $guest_id, $vendor_id, $price)
+	function make_transactions($order_id, $guest_id, $vendor_id, $price, $fee)
 	{
 		/*
-			TODO transaction to manager's account
+`			Would have to do some real credit card transactions if real
 		*/
 		// get giver (user) account id from session data
 		$gquery = $this->db->query("SELECT account_id FROM users 
 			WHERE id = $guest_id");
-		$giver_account = $gquery->row()->account_id;
+		$guest_account = $gquery->row()->account_id;
 		
-		// get recipient (vendor) account id from query
-		$rquery = $this->db->query("SELECT account_id FROM users 
+		// get vendor account id from query
+		$vquery = $this->db->query("SELECT account_id FROM users 
 			WHERE id = (SELECT user_id FROM vendors WHERE id = $vendor_id)");
-		$recipient_account = $rquery->row()->account_id;
+		$vendor_account = $vquery->row()->account_id;
+		
+		// get manager's account id
+		$mquery = $this->db->query("SELECT account_id FROM users
+			WHERE user_type = 'manager' LIMIT 1");
+		$man_account = $mquery->row()->account_id;
 		
 		// get sale time from php date
 		$sale_time = date("Y-m-d H:i:s");
 		
-		// set up array for insertion
-		$data = array(
-			'giver_account' => $giver_account,
-			'recipient_account' => $recipient_account,
+		// figure out amount break down of check to vendor and manager
+		$to_man = $price * ($fee / 100);
+		$to_vendor = $price - $to_man;
+		
+		// set up arrays for insertion
+		$guest2vendor = array(
+			'giver_account' => $guest_account,
+			'recipient_account' => $vendor_account,
 			'order_id' => $order_id,
-			'amount' => $price,
+			'amount' => $to_vendor,
+			'sale_time' => $sale_time
+			);
+		
+		$guest2manager = array(
+			'giver_account' => $guest_account,
+			'recipient_account' => $man_account,
+			'order_id' => $order_id,
+			'amount' => $to_man,
 			'sale_time' => $sale_time
 			);
 			
-		// insert into transactions table
-		if ($this->db->insert('transactions', $data))
+		// insert arrays into transactions table
+		if ($this->db->insert('transactions', $guest2vendor) 
+			AND $this->db->insert('transactions', $guest2manager))
 		{
 			return true;
 		}
