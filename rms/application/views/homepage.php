@@ -28,8 +28,11 @@
 			</p>
 		<?php else: ?>
 		<?php echo validation_errors(); ?>
+		<?php if (isset($error)): ?>
+			<p class="error"><?=$error?></p>
+		<?php endif; ?>
 		<form action="" method="post">
-			
+						
 			<label for="email">Email:</label>
 			<input type="text" name="email" id="email" value="<?= 
 				set_value('email')?>">

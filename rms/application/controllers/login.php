@@ -17,6 +17,7 @@ class Login extends Controller {
 			'</p>');
 				
 		// rules in ../config/form_validation.php
+		// check validation of signin form
 		if ($this->form_validation->run() == FALSE)
 		{
 			$this->load->view('homepage');
@@ -32,9 +33,9 @@ class Login extends Controller {
 			//Check against password
 			if (md5($password) != $row['password']) 
 			{
-				// Wrong password
-				// TODO: show some message for wrong password
-				return false;
+				// Wrong password, send notification and load homepage
+				$data['error'] = "Incorrect password"; 
+				return $this->load->view('homepage', $data);
 			}
 
 			//Destroy old session
