@@ -39,9 +39,14 @@ class Vendor_model extends Model {
 	//
 	// @param order id number
 	// @return object of fields from the orders table for that order id number
+	//  and vendor_type
 	function get_order($order_id)
 	{
-		$query = $this->db->get_where('orders', array('id' => $order_id));
+		$query = $this->db->query("SELECT orders.*, 
+			vendor_types.name AS vendor_type 
+			FROM orders, vendors, vendor_types 
+			WHERE orders.id = $order_id AND orders.vendor_id = vendors.id 
+			AND vendors.type_id = vendor_types.id");
 		return $query->row();
 	}
 	
@@ -105,6 +110,18 @@ class Vendor_model extends Model {
 				$this->db->query("UPDATE orders SET 
 					activated_date = '{$current_time}' 
 					WHERE id = $id_to_activate");
+			}
+			
+			// Mark meal as finished if the busboy order is filled
+			if ($order_r->vendor_type == 'busboy')
+			{
+				$meal_id = $order_r->meal_id;
+				$time_finished = date("Y-m-d H:i:s");
+
+				$this->db->query("UPDATE meals 
+					SET time_finished = '{$time_finished}' 
+					WHERE id = '{$meal_id}'");
+			
 			}
 		}
 	}

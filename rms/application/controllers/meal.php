@@ -161,6 +161,9 @@ class Meal extends Controller {
 	function fillem()
 	{
 		$this->load->model('Meal_model');
+		$this->load->model('Vendor_model');
+		
+		// get orders for active meal
 		$orders = $this->Meal_model->get_meal();
 		
 		// only fill the orders if you have all 4 selected
@@ -169,7 +172,15 @@ class Meal extends Controller {
 			redirect('/meal');
 		}
 		
-		$this->Meal_model->fill_all_orders();
+		// put just the order ids into an array to prep for function
+		foreach ($orders as $order)
+		{
+			$order_ids[] = $order->order_id;
+		}
+		
+		// do the filled magic, including transactions
+		$this->Vendor_model->mark_as_filled($order_ids);
+		
 		redirect('/meal');
 	}
 }

@@ -280,28 +280,6 @@ class Meal_model extends Model {
 		
 		return $data;
 	}
-	
-	// fill_all_orders()
-	function fill_all_orders()
-	{
-		$meal_id = $this->get_unfinished_meal();
-		
-		
-	}
-	
-	// finish_meal()
-	// mark the current meal as finished
-	//
-	// @return TRUE/FALSE depending on status of query execution
-	function finish_meal()
-	{
-		$meal_id = $this->get_unfinished_meal();
-		$time_finished = date("Y-m-d H:i:s");
-		
-		return $this->db->query("UPDATE meals 
-			SET time_finished = '{$time_finished}' WHERE id = '{$meal_id}'");
-	}
-
 }
 // End File classname.php
 // File Source /system/application/models/classname.php

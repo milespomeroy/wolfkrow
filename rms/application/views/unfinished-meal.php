@@ -48,9 +48,7 @@
 	<h2>Demo “Feature”</h2>
 
 	<p>
-		<a href="">Mark all orders filled</a>. 
-	</p>
-	<p>
+		<a href="/meal/fillem">Mark all orders filled and start a new one</a>. <br>
 		A new meal will not be created for this user until all the orders for
 		this meal are filled.
 	</p>
