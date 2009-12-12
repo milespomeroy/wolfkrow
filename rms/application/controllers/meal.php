@@ -140,16 +140,7 @@ class Meal extends Controller {
 			if (!($order_id = $this->Meal_model->get_order_id($vendor_id)))
 			{
 				// make order
-				if ($order_id = $this->Meal_model->make_order($vendor_id))
-				{
-					// make transaction
-					if (!$this->Meal_model->make_transaction($vendor_id, $order_id))
-					{
-						// log this error. Probably delete order if this happens.
-						echo "Transaction not successful.";
-					}
-				}
-				else
+				if (!($order_id = $this->Meal_model->make_order($vendor_id)))
 				{
 					// log this error
 					echo "Order not successful.";

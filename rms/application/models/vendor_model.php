@@ -35,6 +35,16 @@ class Vendor_model extends Model {
 		return $query->result_array();
 	}
 	
+	// get_order(int)
+	//
+	// @param order id number
+	// @return object of fields from the orders table for that order id number
+	function get_order($order_id)
+	{
+		$query = $this->db->get_where('orders', array('id' => $order_id));
+		return $query->row();
+	}
+	
 	// get_revenue(string)
 	//
 	// @param user id number of vendor
@@ -68,9 +78,15 @@ class Vendor_model extends Model {
 	{
 		$current_time = date("Y-m-d H:i:s");
 		
+		// FIX: most of this probably belongs in the controller
 		foreach ($orders as $order)
 		{
-			// set filled time
+			// make transactions, i.e. payments for services
+			$order_r = $this->get_order($order);
+			$this->make_transactions($order_r->id, $order_r->user_id, 
+				$order_r->vendor_id, $order_r->total_price);
+			
+			// set filled time (READ: mark filled)
 			$this->db->query("UPDATE orders SET filled = '{$current_time}' 
 				WHERE id = $order");
 			
@@ -90,6 +106,48 @@ class Vendor_model extends Model {
 					activated_date = '{$current_time}' 
 					WHERE id = $id_to_activate");
 			}
+		}
+	}
+	
+	// make_transactions(int, int)
+	//
+	// @params order_id, guest_id, vendor_id, price
+	// @return TRUE/FALSE based on insertion success
+	function make_transactions($order_id, $guest_id, $vendor_id, $price)
+	{
+		/*
+			TODO transaction to manager's account
+		*/
+		// get giver (user) account id from session data
+		$gquery = $this->db->query("SELECT account_id FROM users 
+			WHERE id = $guest_id");
+		$giver_account = $gquery->row()->account_id;
+		
+		// get recipient (vendor) account id from query
+		$rquery = $this->db->query("SELECT account_id FROM users 
+			WHERE id = (SELECT user_id FROM vendors WHERE id = $vendor_id)");
+		$recipient_account = $rquery->row()->account_id;
+		
+		// get sale time from php date
+		$sale_time = date("Y-m-d H:i:s");
+		
+		// set up array for insertion
+		$data = array(
+			'giver_account' => $giver_account,
+			'recipient_account' => $recipient_account,
+			'order_id' => $order_id,
+			'amount' => $price,
+			'sale_time' => $sale_time
+			);
+			
+		// insert into transactions table
+		if ($this->db->insert('transactions', $data))
+		{
+			return true;
+		}
+		else // insertion failed
+		{
+			return false;
 		}
 	}
 	
@@ -181,7 +239,6 @@ class Vendor_model extends Model {
 		$this->db->query("UPDATE vendor_applications SET activated = '{$act_date}' 
 			WHERE id = $app_id");
 	}
-
 }
 // End File vendor_model.php
 // File Source /system/application/models/vendor_model.php

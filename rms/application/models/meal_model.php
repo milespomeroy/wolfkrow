@@ -250,52 +250,6 @@ class Meal_model extends Model {
 		
 	}
 	
-	// make_transaction(int, int)
-	//
-	// @param1 vendor id number
-	// @param2 order id number
-	// @return TRUE/FALSE based on insertion success
-	function make_transaction($vendor_id, $order_id)
-	{
-		/*
-			TODO transaction to manager's account
-		*/
-		// get giver (user) account id from session data
-		$giver_account = $this->session->userdata('account_id');
-		
-		// get recipient (vendor) account id from query
-		$rquery = $this->db->query("SELECT account_id FROM users 
-			WHERE id = (SELECT user_id FROM vendors WHERE id = $vendor_id)");
-		$recipient_account = $rquery->row()->account_id;
-		
-		// get price paid from query
-		$pquery = $this->db->query("SELECT total_price FROM orders 
-			WHERE id = $order_id");
-		$amount = $pquery->row()->total_price;
-		
-		// get sale time from php date
-		$sale_time = date("Y-m-d H:i:s");
-		
-		// set up array for insertion
-		$data = array(
-			'giver_account' => $giver_account,
-			'recipient_account' => $recipient_account,
-			'order_id' => $order_id,
-			'amount' => $amount,
-			'sale_time' => $sale_time
-			);
-			
-		// insert into transactions table
-		if ($this->db->insert('transactions', $data))
-		{
-			return true;
-		}
-		else // insertion failed
-		{
-			return false;
-		}
-	}
-	
 	// get_order_details(int)
 	//
 	// @param (int) order id
