@@ -8,11 +8,11 @@ class Meal_model extends Model {
 
 	// get_unfinished_meal()
 	//
-	// @param (int) user id
 	// @return (int) meal id OR false if none
-	//
-	function get_unfinished_meal($user_id) 
+	function get_unfinished_meal() 
 	{
+		$user_id = $this->session->userdata('id');
+
 		$query = $this->db->query("SELECT id FROM meals 
 			WHERE user_id = $user_id AND time_finished IS NULL");
 		if ($query->num_rows() > 0)
@@ -27,11 +27,36 @@ class Meal_model extends Model {
 		
 	}
 	
+	// get_meal()
+	//
+	// @return array of objects: order_id, price, activated_date 
+	//  (null if not active), filled (null if not active),
+	//   vendor_name, vendor_type
+	function get_meal()
+	{
+		$meal_id = $this->get_unfinished_meal();
+		
+		$query = $this->db->query("SELECT orders.id AS order_id, 
+			total_price AS price, activated_date, filled, 
+			vendors.name AS vendor_name, vendor_types.name AS vendor_type 
+			FROM orders, vendors, vendor_types WHERE meal_id = $meal_id 
+			AND orders.vendor_id = vendors.id 
+			AND vendors.type_id = vendor_types.id ORDER BY vendors.type_id");
+			
+		if ($query->num_rows() > 0)
+		{
+			return $query->result();
+		}
+		return false;
+	}
+	
 	// insert_new_meal(int)
 	//
 	// @param (int) user id
-	function insert_new_meal($user_id)
+	function insert_new_meal()
 	{
+		$user_id = $this->session->userdata('id');
+
 		$mdate = date("Y-m-d H:i:s");
 		
 		$this->db->insert('meals', array(
@@ -130,15 +155,6 @@ class Meal_model extends Model {
 		}
 	}
 	
-	function get_meal_id()
-	{
-		$user_id = $this->session->userdata('id');
-		
-		$mquery = $this->db->query("SELECT id FROM meals 
-			WHERE user_id = $user_id AND time_finished IS NULL");
-		return $mquery->row()->id;
-	}
-	
 	// get_order_id(int)
 	//
 	// @param vendor id 
@@ -146,7 +162,13 @@ class Meal_model extends Model {
 	function get_order_id($vendor_id)
 	{
 		// get meal id 
-		$meal_id = $this->get_meal_id();
+		if (! ($meal_id = $this->get_unfinished_meal()) )
+		{
+			// FIX: this isn't an elegant way of doing this
+			// really shouldn't happen though
+			echo "No meals found.";
+			exit;
+		}
 		
 		// check for existing orders
 		$query = $this->db->query("SELECT id FROM orders 
@@ -175,7 +197,7 @@ class Meal_model extends Model {
 		$user_id = $this->session->userdata('id');
 		
 		// get meal id 
-		$meal_id = $this->get_meal_id();
+		$meal_id = $this->get_unfinished_meal();
 		
 		// get price from vendor table
 		$pquery = $this->db->query("SELECT price FROM vendors 
@@ -305,13 +327,21 @@ class Meal_model extends Model {
 		return $data;
 	}
 	
+	// fill_all_orders()
+	function fill_all_orders()
+	{
+		$meal_id = $this->get_unfinished_meal();
+		
+		
+	}
+	
 	// finish_meal()
 	// mark the current meal as finished
 	//
 	// @return TRUE/FALSE depending on status of query execution
 	function finish_meal()
 	{
-		$meal_id = $this->get_meal_id();
+		$meal_id = $this->get_unfinished_meal();
 		$time_finished = date("Y-m-d H:i:s");
 		
 		return $this->db->query("UPDATE meals 

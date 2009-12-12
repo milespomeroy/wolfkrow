@@ -33,8 +33,10 @@
 	<p class="small">This amount will be deducted directly from your account.</p>
 	
 	<?php if ($vendor_type == 'busboy'): ?>
-	<p>You have made all your meal selections. Thank you for coming to Wolfkrow
-		Diner. <a href="/login/logout">Logout</a></p>
+	<p>
+		You have made all your vendor selections. 
+		<a href="/meal">Review your orders.</a>
+	</p>
 		<!--
 			TODO consider sending to new page upon clicking next instead of this note.
 		-->

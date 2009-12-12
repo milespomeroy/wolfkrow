@@ -16,10 +16,9 @@ class Meal extends Controller {
 		}
 		
 		$this->load->model('Meal_model');
-		$user_id = $this->session->userdata('id');
 				
 		// Is there an unfinished meal for this user id?
-		if ($meal_id = $this->Meal_model->get_unfinished_meal($user_id)) // yes
+		if ($meal_id = $this->Meal_model->get_unfinished_meal()) // yes
 		{
 			// Check where they are at in the meal and pass data
 			// The order of the meal workflow is currently hard coded here.
@@ -67,12 +66,15 @@ class Meal extends Controller {
 					$data['vendors'] = 
 						$this->Meal_model->get_vendors($data['type']);
 					break;
+				default:
+					$data['orders'] = $this->Meal_model->get_meal();
+					return $this->load->view('unfinished-meal', $data);
 			}
 		}
-		else // no
+		else // no unfinished meal found
 		{
 			// Set up new meal
-			$this->Meal_model->insert_new_meal($user_id);
+			$this->Meal_model->insert_new_meal();
 			
 			// Set data to host to view that vendor type selection page
 			$data['type'] = 'host';
@@ -125,7 +127,7 @@ class Meal extends Controller {
 		// rules in ../config/form_validation.php
 		if ($this->form_validation->run() == FALSE) // validate vendor id
 		{
-			// someone is hacking the code, log this
+			// someone is hacking, log this
 			redirect('/meal');
 		}
 		else // vendor id validated 
@@ -146,16 +148,6 @@ class Meal extends Controller {
 						// log this error. Probably delete order if this happens.
 						echo "Transaction not successful.";
 					}
-					
-					// if order was for busboy, mark meal as finished
-					$order = $this->Meal_model->get_order_details($order_id);
-					if ($order['vendor_type'] == 'busboy')
-					{
-						$this->Meal_model->finish_meal();
-						/*
-							TODO BUG: problems when resubmitting after meal marked as finished
-						*/
-					}
 				}
 				else
 				{
@@ -171,9 +163,23 @@ class Meal extends Controller {
 			$this->load->view('order', $data);
 		
 		}
+	}
+	
+	// fillem()
+	// demo "feature" to mark all orders filled
+	function fillem()
+	{
+		$this->load->model('Meal_model');
+		$orders = $this->Meal_model->get_meal();
 		
+		// only fill the orders if you have all 4 selected
+		if (count($orders) < 4)
+		{
+			redirect('/meal');
+		}
 		
-		
+		$this->Meal_model->fill_all_orders();
+		redirect('/meal');
 	}
 }
 // End File meal.php
