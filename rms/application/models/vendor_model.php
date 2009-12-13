@@ -89,6 +89,20 @@ class Vendor_model extends Model {
 		return false;
 	}
 	
+	// get_rating(int)
+	//
+	// @param order id number
+	// @return row object from ratings table, or false if not found
+	function get_rating($order_id)
+	{
+		$query = $this->db->get_where('ratings', array('order_id' => $order_id));
+		if ($query->num_rows() > 0)
+		{
+			return $query->row();
+		}
+		return false;
+	}
+	
 	// mark_as_filled(array)
 	// also activate next order in the meal if one exists
 	//

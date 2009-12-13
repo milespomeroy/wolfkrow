@@ -35,14 +35,31 @@
 				echo "Filled";
 			}
 			?></td>
-			<td>rate</td>
+			<td>
+			<?php if (isset($order->rating)): ?>
+				<?=$order->rating?>
+			<?php else: ?>
+				<form action="/meal/rate/<?=$order->vendor_id?>" method="post">
+				    <div id="stars-wrapper">
+				        <input type="radio" name="newrate" value="1" title="Poor" />
+				        <input type="radio" name="newrate" value="2" title="Meh" />
+				        <input type="radio" name="newrate" value="3" title="Average" />
+				        <input type="radio" name="newrate" value="4" title="Good" />
+				        <input type="radio" name="newrate" value="5" title="Awesome" />
+						<input type="hidden" name="order_id" value="<?=$order->order_id?>">
+						<input type="submit" value="Rate">
+				    </div>
+				</form>
+			<?php endif; ?>
+			</td>
 		</tr>
 		<?php endforeach; ?>
 	</table>
 	
 	<h2>Ahh…</h2>
 	<p>
-		Now, sit back and enjoy your meal at Wolfkrow Diner. 
+		Now, sit back and enjoy your meal at Wolfkrow Diner. Don’t forget to
+		rate your vendor selections.
 	</p>
 	
 	<h2>Demo “Feature”</h2>

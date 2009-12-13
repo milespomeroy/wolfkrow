@@ -31,17 +31,21 @@ class Meal_model extends Model {
 	//
 	// @return array of objects: order_id, price, activated_date 
 	//  (null if not active), filled (null if not active),
-	//   vendor_name, vendor_type
+	//   vendor_name, vendor_type, rating
 	function get_meal()
 	{
 		$meal_id = $this->get_unfinished_meal();
 		
 		$query = $this->db->query("SELECT orders.id AS order_id, 
-			total_price AS price, activated_date, filled, 
-			vendors.name AS vendor_name, vendor_types.name AS vendor_type 
-			FROM orders, vendors, vendor_types WHERE meal_id = $meal_id 
-			AND orders.vendor_id = vendors.id 
-			AND vendors.type_id = vendor_types.id ORDER BY vendors.type_id");
+					total_price AS price, activated_date, filled, 
+					vendors.name AS vendor_name, vendor_types.name AS vendor_type,
+					vendors.id AS vendor_id, ratings.rating
+					FROM vendors, vendor_types, 
+					orders LEFT JOIN ratings ON orders.id = ratings.order_id
+					WHERE meal_id = $meal_id 
+					AND orders.vendor_id = vendors.id 
+					AND vendors.type_id = vendor_types.id 
+					ORDER BY vendors.type_id");
 			
 		if ($query->num_rows() > 0)
 		{
@@ -282,7 +286,7 @@ class Meal_model extends Model {
 	//
 	// @param (int) order id
 	// @return (array) vendor_id, vendor_name, vendor_type, total_price, 
-	//   services (array) 
+	//   services (array), rating (NULL if there is none)
 	function get_order_details($order_id)
 	{
 		// get vendor info

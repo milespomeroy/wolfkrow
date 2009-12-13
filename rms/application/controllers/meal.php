@@ -68,7 +68,7 @@ class Meal extends Controller {
 					break;
 				default:
 					$data['orders'] = $this->Meal_model->get_meal();
-					return $this->load->view('unfinished-meal', $data);
+					return $this->load->view('review-order', $data);
 			}
 		}
 		else // no unfinished meal found
@@ -180,6 +180,13 @@ class Meal extends Controller {
 		{
 			// TODO: log error
 			redirect('/');
+		}
+		
+		// check for existing rating
+		if ($this->Vendor_model->get_rating($order_id))
+		{
+			redirect('/meal');
+			exit;
 		}
 		
 		// set up data for insertion into ratings database
