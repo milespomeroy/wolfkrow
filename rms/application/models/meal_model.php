@@ -65,6 +65,34 @@ class Meal_model extends Model {
 			));
 	}
 	
+	// get_meal_stats()
+	// for admin dashboard
+	//
+	// return array of numbers: new_meals, host, waiter, cook, busboy
+	function get_meal_stats()
+	{
+		// get new meals (no active orders)
+		// this query might not scale well
+		$mquery = $this->db->query("SELECT COUNT(id) AS count 
+			FROM meals WHERE time_finished IS NULL 
+			AND id NOT IN (SELECT meal_id FROM orders)");
+		$data[] = $mquery->row()->count;
+			
+		$tquery = $this->db->get('vendor_types');
+		$types = $tquery->result();
+		
+		foreach ($types as $type)
+		{
+			$query = $this->db->query("SELECT COUNT(id) AS count 
+				FROM orders WHERE activated_date IS NOT NULL 
+				AND filled IS NULL AND vendor_id IN 
+				(SELECT id FROM vendors WHERE type_id = $type->id)");
+			$data[] = $query->row()->count;
+		}
+		
+		return $data;		
+	}
+	
 	// vendor_order_exists(int, string)
 	// 
 	// @param1 (int) meal id

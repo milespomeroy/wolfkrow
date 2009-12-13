@@ -12,7 +12,58 @@ class Admin extends Controller {
 		// Check if logged in and of manager user type
 		$this->_check_login();
 		
-		$this->load->view('admin-dash');
+		// get revenue
+		$this->load->model('Vendor_model');
+		$user_id = $this->session->userdata('id');
+		$data['rev'] = $this->Vendor_model->get_revenue($user_id);
+		
+		// get guest's meal stats
+		$this->load->model('Meal_model');
+		$data['meal_stats'] = $this->_make_graph($this->Meal_model->get_meal_stats());
+		
+		$this->load->view('admin-dash', $data);
+	}
+	
+	// _make_graph(array)
+	// intended for bar graph of meal stats in admin dashboard
+	//
+	// @param simple array of bar graph values
+	// @return an array of arrays that contain: height, left, and value
+	function _make_graph($stats)
+	{
+		// adapted from terrill.ca
+		$xOffset = 18;
+		$xIncrement = 72; // width of bars
+		$xPadding = 18; // padding between bars
+		$graphHeight = 200;
+		$maxResult = 1;
+		$scale = 1;
+		
+		foreach ($stats as $i => $value)
+		{
+			if ($maxResult < $value)
+			{
+				$maxResult = $value;
+			}
+		}
+		
+		// set scale
+		$scale = $graphHeight / $maxResult;
+		
+		foreach ($stats as $i => $value)
+		{
+			$height = ($value * $scale);
+			$data[] = array (
+					'height' => $height,
+					'left' => $xOffset,
+					'value' => $value
+				);
+			
+			// Move on to next column
+			$xOffset = $xOffset + $xIncrement + $xPadding;
+		}
+		
+		return $data;
 	}
 	
 	// applications()

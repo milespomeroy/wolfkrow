@@ -5,6 +5,7 @@
 	<title>Wolfkrow Admin Dashboard</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+	
 </head>
 <body>
 	
@@ -23,11 +24,29 @@
 	
 	<p>
 		Today (so far): 
-		$0.00
+		$<?php echo $rev['today'] == NULL ? '0.00' : $rev['today'] ?>
 		<br>
-		Yesterday: $0.00
+		Yesterday: $<?php echo $rev['yesterday'] == NULL ? '0.00' : $rev['yesterday'] ?>
 		<br>
 	</p>
+	
+	<h2>Guest Meal Status</h2>
+	
+		<ul class="barGraph">
+			<?php foreach ($meal_stats as $stat): ?>
+			<li style="height: <?=$stat['height']?>px; 
+				left: <?=$stat['left']?>px;">
+				<?=$stat['value']?></li>
+			<?php endforeach; ?>
+		</ul>
+		<ul class="legend">
+			<li style="left: 18px;">None</li>
+			<li style="left: 108px;">Host</li>
+			<li style="left: 198px;">Waiter</li>
+			<li style="left: 288px;">Cook</li>
+			<li style="left: 378px;">Busboy</li>
+		</ul>
+		<p class="htitle"># of Active Orders</p>
 	
 	<div id="footer">
 		&copy; Wolfkrow Diner 2009 | Software Project for AJE by Miles Pomeroy
