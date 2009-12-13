@@ -90,6 +90,7 @@ class Meal extends Controller {
 	}
 	
 	// view vendor public listing using vendor id 
+	// TODO: move to vendor controller?
 	function vendor($vendor_id='')
 	{
 		// redirect to meal index if no vendor id given
@@ -127,7 +128,6 @@ class Meal extends Controller {
 		// rules in ../config/form_validation.php
 		if ($this->form_validation->run() == FALSE) // validate vendor id
 		{
-			// someone is hacking, log this
 			redirect('/meal');
 		}
 		else // vendor id validated 
@@ -150,10 +150,50 @@ class Meal extends Controller {
 			// set up data to display
 			
 			$data = $this->Meal_model->get_order_details($order_id);
+			$data['order_id'] = $order_id;
 		
 			$this->load->view('order', $data);
 		
 		}
+	}
+	
+	// rate(int)
+	//
+	// @params vendor_id as a 3rd uri component and the post: newrate, order_id
+	function rate($vendor_id)
+	{
+		if (!$this->session->userdata('logged_in'))
+		{
+			// not logged in. Na ah ah ah, you didn't say the magic word.
+			redirect('/');
+		}
+		
+		$this->load->model('Vendor_model');
+		
+		$rating = $this->input->post('newrate');
+		$order_id = $this->input->post('order_id');
+		$user_id = $this->session->userdata('id');
+		
+		// check for something malicious
+		if (!is_numeric($rating) OR !is_numeric($vendor_id) 
+			OR !is_numeric($order_id))
+		{
+			// TODO: log error
+			redirect('/');
+		}
+		
+		// set up data for insertion into ratings database
+		$rate_date = date("Y-m-d H:i:s");
+		$data = array(
+				'vendor_id' => $vendor_id,
+				'user_id' => $user_id,
+				'order_id' => $order_id,
+				'rating' => $rating,
+				'rated_date' => $rate_date
+			);
+		
+		$this->Vendor_model->insert_rating($data);
+		redirect('/meal');
 	}
 	
 	// fillem()

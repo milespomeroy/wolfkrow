@@ -76,6 +76,19 @@ class Vendor_model extends Model {
 		return $rev;
 	}
 	
+	// insert_rating(array)
+	//
+	// @param array all all element to be inserted into ratings table
+	// @return TRUE/FALSE based on insertion success
+	function insert_rating($rating)
+	{
+		if ($this->db->insert('ratings', $rating))
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	// mark_as_filled(array)
 	// also activate next order in the meal if one exists
 	//

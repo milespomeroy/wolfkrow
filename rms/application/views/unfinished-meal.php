@@ -21,7 +21,6 @@
 			<th><?=ucwords($order->vendor_type)?></th>
 			<td><?=$order->vendor_name?></td>
 			<td>$<?=$order->price?></td>
-			<td>rate</td>
 			<td><?php
 			if ($order->activated_date == NULL)
 			{
@@ -36,6 +35,7 @@
 				echo "Filled";
 			}
 			?></td>
+			<td>rate</td>
 		</tr>
 		<?php endforeach; ?>
 	</table>

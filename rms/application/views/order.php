@@ -32,14 +32,25 @@
 	
 	<p class="small">This amount will be deducted directly from your account.</p>
 	
+	<form action="/meal/rate/<?=$vendor_id?>" method="post">
+		Rate <?=$vendor_name?>:
+	    <div id="stars-wrapper">
+	        <input type="radio" name="newrate" value="1" title="Poor" />
+	        <input type="radio" name="newrate" value="2" title="Meh" />
+	        <input type="radio" name="newrate" value="3" title="Average" />
+	        <input type="radio" name="newrate" value="4" title="Good" />
+	        <input type="radio" name="newrate" value="5" title="Awesome" />
+			<input type="hidden" name="order_id" value="<?=$order_id?>">
+			<input type="submit" value="Rate">
+	    </div>
+	</form>
+	
 	<?php if ($vendor_type == 'busboy'): ?>
 	<p>
 		You have made all your vendor selections. 
 		<a href="/meal">Review your orders.</a>
 	</p>
-		<!--
-			TODO consider sending to new page upon clicking next instead of this note.
-		-->
+	
 	<?php else: ?>
 	<p><a href="/meal">Next &raquo;</a></p>
 	<?php endif; ?>
