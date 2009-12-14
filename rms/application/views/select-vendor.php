@@ -11,7 +11,11 @@
 	<div class="logout" >
 	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>
 	</div>
-
+	
+	<a href="/" id="logo">
+		<img src="/images/logo.png" alt="Wolfkrow Diner">
+	</a>
+	
 	<h1>Select a <?=ucwords($type)?></h1>
 
 	<?php if ($type == 'host'): ?>

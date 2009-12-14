@@ -8,10 +8,6 @@
 </head>
 <body>
 	
-	<!--
-		TODO You can do better than this. Replace login form if logged in.
-	-->
-	
 	<?php if($this->session->userdata('logged_in')): ?>
 	<div class="logout" >
 	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>

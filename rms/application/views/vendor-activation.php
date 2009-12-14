@@ -10,6 +10,10 @@
 	
 	<!-- Similar to the Edit Public listing page -->
 	
+	<a href="/" id="logo">
+		<img src="/images/logo.png" alt="Wolfkrow Diner">
+	</a>
+	
 	<h1>Activate Your Vendor Account</h1>
 	
 	<p>

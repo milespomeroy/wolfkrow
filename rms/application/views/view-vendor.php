@@ -13,7 +13,11 @@
 	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>
 	</div>
 	<?php endif; ?>
-
+	
+	<a href="/" id="logo">
+		<img src="/images/logo.png" alt="Wolfkrow Diner">
+	</a>
+	
 	<h1><?=$name?> — <?=ucwords($type)?></h1>
 	
 	<?php if ($this->session->userdata('user_type') == 'vendor'): ?>

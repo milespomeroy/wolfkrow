@@ -8,6 +8,10 @@
 </head>
 <body>
 	
+	<a href="/" id="logo">
+		<img src="/images/logo.png" alt="Wolfkrow Diner">
+	</a>
+	
 	<h1>Thank you for choosing Wolfkrow Diner!</h1>
 	
 	<p>Fill out the form below to set up your account for your first visit.</p>

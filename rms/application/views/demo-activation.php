@@ -11,6 +11,10 @@
 	<div class="logout" >
 	<a href="/">Login</a>
 	</div>
+	
+	<a href="/" id="logo">
+		<img src="/images/logo.png" alt="Wolfkrow Diner">
+	</a>
 
 <h1>Vendor Account Activation</h1>
 

@@ -8,6 +8,10 @@
 </head>
 <body>
 	
+	<a href="/" id="logo">
+		<img src="/images/logo.png" alt="Wolfkrow Diner">
+	</a>
+	
 	<h1>Vendor Application</h1>
 	
 	<p>Interested in being a vendor at Wolfkrow Diner? Fill out the form below:</p>
