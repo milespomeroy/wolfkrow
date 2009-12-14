@@ -162,6 +162,31 @@ class Meal extends Controller {
 		}
 	}
 	
+	// cancel()
+	// cancel current order if not filled
+	function cancel($order_id)
+	{
+		if (!$this->session->userdata('logged_in'))
+		{
+			// not logged in. Na ah ah ah, you didn't say the magic word.
+			redirect('/');
+		}
+		
+		if (!is_numeric($order_id))
+		{
+			redirect('/meal');
+		}
+		
+		$this->load->model('Meal_model');
+		
+		if (! $this->Meal_model->is_order_filled($order_id))
+		{
+			$this->Meal_model->cancel_order($order_id);
+		}
+		
+		redirect('/meal');
+	}
+	
 	// rate(int)
 	//
 	// @params vendor_id as a 3rd uri component and the post: newrate, order_id

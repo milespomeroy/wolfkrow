@@ -18,13 +18,10 @@
 	
 	<h1>You’ve Selected <?=$vendor_name?></h1>
 	
-	<img src="/images/<?=$vendor_id?>.jpg" alt="<?=$vendor_name?>" style="float:right;">
 	<p>Thank you for selecting <?=$vendor_name?> as your <?=$vendor_type?> 
 		for tonight. <?=$vendor_name?> will be with you momentarily.</p>
 	
-	<input type="submit" value="Cancel Order" disabled>
-	
-	<h2>Services you ordered:</h2>
+	<h2>Services you ordered</h2>
 	
 	<ul>
 	<?php foreach ($services as $service): ?>
@@ -35,14 +32,16 @@
 	<h3>Total: $<?=$total_price?></h3>
 	
 	<p class="small">This amount will be deducted directly from your account.</p>
-	
+	<p id="cancel"><a href="/meal/cancel/<?=$order_id?>" class="error">&laquo; Cancel</a></p>
 	<?php if ($vendor_type == 'busboy'): ?>
 	<p id="next">
 		<a href="/meal">Review your orders &raquo;</a>
 	</p>
 	
 	<?php else: ?>
-	<p id="next"><a href="/meal">Next &raquo;</a></p>
+	<p id="next">
+		<a href="/meal">Next &raquo;</a>
+	</p>
 	<?php endif; ?>
 
 	

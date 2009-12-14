@@ -50,8 +50,6 @@
 		<?php endforeach; ?>
 	</div>	
 	
-	<h2><?=ucwords($type)?></h2>
-	
 	<!-- TODO add ability to sort by factors
 	<label for="sort-by">Sort by:</label>
 	<select id="sort-by">

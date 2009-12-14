@@ -85,6 +85,7 @@ h1 {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 2em;
 	line-height: 1.444em;
+	margin-top: 0.72em;
 	margin-bottom: 0.722em;
 	text-transform: none;
 }
@@ -92,11 +93,9 @@ h1 {
 h2 {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 1.444em;
-	line-height: 2em;
-	margin-top: 1em;
+	line-height: 1.444em;
 	margin-bottom: 0.5em;
 	border-bottom: 2px solid #72918B;
-	/*clear: both;*/
 }
 
 a {
@@ -109,7 +108,7 @@ a:hover {
 
 p {
 	font-size: 1em;
-	margin-bottom: 1.444em;
+	margin-bottom: 1em;
 }
 
 hr {
@@ -122,6 +121,10 @@ hr {
 ul {
 	margin-left: 26px;
 	margin-bottom: 1em;
+}
+
+dl {
+	margin-bottom: 1.444em;
 }
 
 dt {
@@ -139,6 +142,7 @@ dt {
 
 h2#menu {
 	width: 40%;
+	margin-top: 0.72em;
 }
 
 input[type="checkbox"] {
@@ -258,11 +262,17 @@ fieldset#signin p {
 #standard {
 	float: left;
 	width: 50%;
+	margin-bottom: 1em;
 }
 
 #additional {
 	float: left;
 	margin-left: 26px;
+}
+
+#additional input {
+	margin-top: 6px;
+	margin-right: 6px;
 }
 
 /* Select Vendor */
@@ -272,6 +282,7 @@ fieldset#signin p {
 	padding: 26px;
 	margin-top: 2em;
 	height: 10em;
+	clear: both;
 }
 
 .vendor h3 {

@@ -323,6 +323,34 @@ class Meal_model extends Model {
 		
 		return $data;
 	}
+	
+	// is_order_filled(int)
+	// check if the order id has been marked as filled
+	//
+	// @param order id number
+	// @return TRUE/FALSE
+	function is_order_filled($order_id)
+	{
+		$query = $this->db->query("SELECT filled FROM orders WHERE id = $order_id");
+		if ($query->num_rows() > 0)
+		{
+			if (isset($query->row()->filled))
+			{
+				return TRUE;
+			}
+			return FALSE; // if filled is NULL
+		}
+		return TRUE; // consider order filled if not found
+	}
+	
+	// cancel_order(int)
+	// delete order record
+	//
+	// @param order id number to delete
+	function cancel_order($order_id)
+	{
+		$this->db->delete('orders', array('id' => $order_id));
+	}
 }
 // End File classname.php
 // File Source /system/application/models/classname.php
