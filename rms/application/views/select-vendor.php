@@ -5,6 +5,16 @@
 	<title>Select a <?=ucwords($type)?></title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+	
+	<script type="text/javascript" src="/scripts/jquery.js"></script>
+	<script type="text/javascript" src="/scripts/ui.core.min.js"></script>
+	<script type="text/javascript" src="/scripts/ui.stars.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".stars").stars();
+		});
+	</script>
+	
 </head>
 <body>
 	
@@ -28,7 +38,7 @@
 		
 		
 	<div id="standard">
-		<h2><?=ucwords($type)?> Standard Package</h2>
+		<h2>Standard Package</h2>
 	
 		<ul class="package">
 		<?php foreach ($package as $item): ?>
@@ -60,17 +70,35 @@
 	<?php foreach ($vendors as $vendor): ?>
 	<div class="vendor">
 		<img src="/images/<?=$vendor->id?>.jpg" alt="<?=$vendor->name?>">
-		<h3><a href="/meal/vendor/<?=$vendor->id?>"><?=$vendor->name?></a></h3>
-		<p>Rating: ★★★☆☆</p>
-		<p>Price: $<?=$vendor->price?></p>
 		
-		<form action="/meal/order" method="post">
+		<form action="/meal/order" method="post" class="v-select">
 			<input type="hidden" name="vendor-id" value="<?=$vendor->id?>">
 			<!--
 				TODO Add additional services as hidden inputs using javascript
 			-->
 			<input type="submit" name="submit" value="Select <?=$vendor->name?>">
 		</form>
+		
+		<h3><?=$vendor->name?></h3>
+		<p>			
+			<form class="stars">
+				<?php $rating = round($vendor->avg_rating); ?>
+		        <input type="radio" name="newrate" value="1" 
+					title="Poor" <?=is_rated(1, $rating)?>>
+		        <input type="radio" name="newrate" value="2" 
+					title="Meh" <?=is_rated(2, $rating)?>>
+		        <input type="radio" name="newrate" value="3" 
+					title="Average" <?=is_rated(3, $rating)?>>
+		        <input type="radio" name="newrate" value="4" 
+					title="Good" <?=is_rated(4, $rating)?>>
+		        <input type="radio" name="newrate" value="5" 
+					title="Awesome" <?=is_rated(5, $rating)?>>
+		    </form>
+		</p>
+		<p class="qualifications"><?=nl2br($vendor->qualifications)?></p>
+		<p class="price"><strong>$<?=$vendor->price?></strong></p>
+		
+		
 	</div>
 	<?php endforeach; ?>
 	

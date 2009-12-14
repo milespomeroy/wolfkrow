@@ -19,7 +19,7 @@
 	
 	<h1>Wolfkrow Admin Dashboard</h1>
 	
-	<ul>
+	<ul id="nav">
 		<li><a href="/admin/applications">Review Vendor Applications</a></li>
 		<li><a href="/admin/fees">Edit Transaction Fees</a></li>
 	</ul>

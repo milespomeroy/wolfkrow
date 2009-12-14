@@ -11,8 +11,10 @@ class Vendor_model extends Model {
 	// @return (array) vendor_id (int), vendor_name (string)
 	function get_vendor($user_id)
 	{
-		$query = $this->db->query("SELECT id AS vendor_id, name AS vendor_name 
-			FROM vendors WHERE user_id = $user_id");
+		$query = $this->db->query("SELECT vendors.id AS vendor_id, 
+			name AS vendor_name, AVG(ratings.rating) AS avg_rating
+			FROM vendors LEFT JOIN ratings ON vendors.id = ratings.vendor_id 
+			WHERE vendors.user_id = $user_id");
 		return $query->row_array();
 	}
 	

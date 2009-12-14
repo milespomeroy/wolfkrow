@@ -5,6 +5,15 @@
 	<title>Vendor Dashboard</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+	
+	<script type="text/javascript" src="/scripts/jquery.js"></script>
+	<script type="text/javascript" src="/scripts/ui.core.min.js"></script>
+	<script type="text/javascript" src="/scripts/ui.stars.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".stars").stars();
+		});
+	</script>
 </head>
 <body>
 	
@@ -18,26 +27,38 @@
 	
 	<h1><?=$vendor_name?>’s Dashboard</h1>
 	
-	<ul>
+	<ul id="nav">
 		<li><a href="/meal/vendor/<?=$vendor_id?>">View Listing</a></li>
-		<li><a href="/vendor/edit/<?=$vendor_id?>">Edit Listing</a></li>
+		<!--
+			TODO Edit vendor listing info
+		-->
 	</ul>
 	
-	<h3>Status: Available</h3>
 	<!--
 		TODO Availability status of vendors
 	-->
-	<a href="">become unavailable</a>
-	
-	<h3>Avg Rating: ★★★★★</h3>
+	<p>
+		<form class="stars">
+			<?php $rating = round($avg_rating); ?>
+	        <input type="radio" name="newrate" value="1" 
+				title="Poor" <?=is_rated(1, $rating)?> disabled >
+	        <input type="radio" name="newrate" value="2" 
+				title="Meh" <?=is_rated(2, $rating)?> disabled >
+	        <input type="radio" name="newrate" value="3" 
+				title="Average" <?=is_rated(3, $rating)?> disabled >
+	        <input type="radio" name="newrate" value="4" 
+				title="Good" <?=is_rated(4, $rating)?> disabled >
+	        <input type="radio" name="newrate" value="5" 
+				title="Awesome" <?=is_rated(5, $rating)?> disabled >
+	    </form>
+	</p>
 	
 	<h2>Orders Up</h2>
 	
-	<form action="/vendor/fill_orders" method="post">
-		<input type="submit" value="Update Orders">
-	
+	<form action="/vendor/fill_orders" method="post" id="ordersup">
+
 	<?php if (count($orders) > 0): ?>
-	<table>
+	<table id="ordersup">
 		<tr>
 			<th>Name</th>
 			<th>Time Active</th>
@@ -46,6 +67,7 @@
 	
 	<!--
 		TODO Refresh this periodically with javascript
+		TODO Submit filled orders via javascript
 	-->
 	<?php foreach ($orders as $order): ?>
 		<tr>
@@ -61,6 +83,8 @@
 	<?php else: ?>
 			<p>No orders found.</p>
 	<?php endif; ?>
+	<input type="submit" value="Update Orders">
+	
 	</form>
 	
 	<h2>Revenue</h2>

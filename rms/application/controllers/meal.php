@@ -9,12 +9,15 @@ class Meal extends Controller {
 	// that select vendor page
 	function index()
 	{
-		if(!$this->session->userdata('logged_in'))
+		// Check if logged in and of guest user type
+		if (!$this->_check_login())
 		{
 			// not logged in. Na ah ah ah, you didn't say the magic word.
 			redirect('/');
 		}
 		
+		// form helper needed for ratings
+		$this->load->helper('form');
 		$this->load->model('Meal_model');
 				
 		// Is there an unfinished meal for this user id?
@@ -95,7 +98,7 @@ class Meal extends Controller {
 	}
 	
 	// view vendor public listing using vendor id 
-	// TODO: move to vendor controller?
+	// TODO: move to vendor controller
 	function vendor($vendor_id='')
 	{
 		// redirect to meal index if no vendor id given
@@ -104,6 +107,7 @@ class Meal extends Controller {
 			redirect ('/meal');
 		}
 		
+		$this->load->helper('form');
 		$this->load->model('Meal_model');
 		
 		// get vendor data for id given
@@ -122,7 +126,8 @@ class Meal extends Controller {
 	// make order, do transaction
 	function order()
 	{
-		if (!$this->session->userdata('logged_in'))
+		// Check if logged in and of guest user type
+		if (!$this->_check_login())
 		{
 			// not logged in. Na ah ah ah, you didn't say the magic word.
 			redirect('/');
@@ -166,7 +171,8 @@ class Meal extends Controller {
 	// cancel current order if not filled
 	function cancel($order_id)
 	{
-		if (!$this->session->userdata('logged_in'))
+		// Check if logged in and of guest user type
+		if (!$this->_check_login())
 		{
 			// not logged in. Na ah ah ah, you didn't say the magic word.
 			redirect('/');
@@ -192,7 +198,8 @@ class Meal extends Controller {
 	// @params vendor_id as a 3rd uri component and the post: newrate, order_id
 	function rate()
 	{
-		if (!$this->session->userdata('logged_in'))
+		// Check if logged in and of guest user type
+		if (!$this->_check_login())
 		{
 			// not logged in. Na ah ah ah, you didn't say the magic word.
 			redirect('/');
@@ -263,6 +270,29 @@ class Meal extends Controller {
 		$this->Vendor_model->mark_as_filled($order_ids);
 		
 		redirect('/meal');
+	}
+	
+	// _check_login()
+	// internal function to check session data for being logged in and 
+	// that the user type is guest
+	//
+	// @return TRUE if both are right, FALSE if either are wrong
+	function _check_login()
+	{
+		// Logged in?
+		if (!$this->session->userdata('logged_in'))
+		{
+			return false;
+		}
+		
+		// Check if vendor
+		if ($this->session->userdata('user_type') != 'guest')
+		{
+			return false;
+		}
+		
+		// Yes logged in and yes you are a guest
+		return true;
 	}
 }
 // End File meal.php

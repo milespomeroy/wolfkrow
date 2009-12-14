@@ -16,6 +16,7 @@ class Vendor extends Controller {
 			redirect('/');
 		}
 		
+		$this->load->helper('form'); // for ratings
 		$this->load->model('Vendor_model');
 		
 		$v_user_id = $this->session->userdata('id');

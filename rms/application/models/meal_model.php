@@ -163,8 +163,12 @@ class Meal_model extends Model {
 	// @return (array of objects) from vendors tables with average rating
 	function get_vendors($vendor_type)
 	{
-		$query = $this->db->query("SELECT * FROM vendors WHERE type_id = 
-		(SELECT id FROM vendor_types WHERE name = '$vendor_type')");
+		$query = $this->db->query("SELECT vendors.*, 
+			AVG(ratings.rating) AS avg_rating 
+			FROM vendors LEFT JOIN ratings ON vendors.id = ratings.vendor_id 
+			WHERE type_id = 
+			(SELECT id FROM vendor_types WHERE name = '{$vendor_type}') 
+			GROUP BY vendors.id");
 		return $query->result();
 	}
 	
@@ -177,8 +181,10 @@ class Meal_model extends Model {
 	function get_vendor($vendor_id)
 	{
 		// vendor info
-		$vquery = $this->db->query("SELECT vendors.*, vendor_types.name AS type 
-			FROM vendors, vendor_types 
+		$vquery = $this->db->query("SELECT vendors.*, 
+			vendor_types.name AS type, AVG(ratings.rating) AS avg_rating 
+			FROM vendor_types, vendors LEFT JOIN ratings 
+			ON vendors.id = ratings.vendor_id
 			WHERE vendors.id = $vendor_id AND vendors.type_id = vendor_types.id"
 			);
 		

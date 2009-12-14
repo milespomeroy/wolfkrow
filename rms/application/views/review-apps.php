@@ -18,7 +18,7 @@
 	
 	<h1>Review Vendor Applications</h1>
 	
-	<ul>
+	<ul id="nav">
 		<li><a href="/admin">&laquo; Back to Dashboard</a></li>
 	</ul>
 	

@@ -6,7 +6,7 @@ function is_rated($value, $rating)
 {
 	if ($value == $rating)
 	{
-		return "checked disabled='disabled'";
+		return " disabled='disabled' checked ";
 	}
 	elseif ($rating != NULL) // if rating has a value than all radios disabled
 	{
