@@ -5,6 +5,12 @@
 	<title>Review Your Orders</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
+	
+	<script type="text/javascript" src="/scripts/jquery.js"></script>
+	<script type="text/javascript" src="/scripts/ui.core.min.js"></script>
+	<script type="text/javascript" src="/scripts/ui.stars.min.js"></script>
+	<script type="text/javascript" src="/scripts/review-orders.js"></script>
+
 </head>
 <body>
 	
@@ -36,21 +42,31 @@
 			}
 			?></td>
 			<td>
-			<?php if (isset($order->rating)): ?>
-				<?=$order->rating?>
-			<?php else: ?>
-				<form action="/meal/rate/<?=$order->vendor_id?>" method="post">
-				    <div id="stars-wrapper">
-				        <input type="radio" name="newrate" value="1" title="Poor" />
-				        <input type="radio" name="newrate" value="2" title="Meh" />
-				        <input type="radio" name="newrate" value="3" title="Average" />
-				        <input type="radio" name="newrate" value="4" title="Good" />
-				        <input type="radio" name="newrate" value="5" title="Awesome" />
-						<input type="hidden" name="order_id" value="<?=$order->order_id?>">
-						<input type="submit" value="Rate">
+				<form action="/meal/rate" method="post" >
+				    <div class="stars" id="<?=$order->vendor_type?>">
+						<?php $rating = $order->rating; ?>
+				        <input type="radio" name="newrate" value="1" 
+							title="Poor" <?=is_rated(1, $rating)?>>
+				        <input type="radio" name="newrate" value="2" 
+							title="Meh" <?=is_rated(2, $rating)?>>
+				        <input type="radio" name="newrate" value="3" 
+							title="Average" <?=is_rated(3, $rating)?>>
+				        <input type="radio" name="newrate" value="4" 
+							title="Good" <?=is_rated(4, $rating)?>>
+				        <input type="radio" name="newrate" value="5" 
+							title="Awesome" <?=is_rated(5, $rating)?>>
+						<input type="hidden" name="order_id" 
+							id="order_id-<?=$order->vendor_type?>" 
+							value="<?=$order->order_id?>">
+						<input type="hidden" name="vendor_id" 
+							id="vendor_id-<?=$order->vendor_type?>"
+							value="<?=$order->vendor_id?>">
+						<input type="submit" value="Rate" 
+							<?=is_rated('submit', $rating)?>>
 				    </div>
 				</form>
-			<?php endif; ?>
+				<div id="loader-<?=$order->vendor_type?>">wait&hellip;</div>
+				<span class="test"></span>
 			</td>
 		</tr>
 		<?php endforeach; ?>

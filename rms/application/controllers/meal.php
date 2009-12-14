@@ -67,6 +67,10 @@ class Meal extends Controller {
 						$this->Meal_model->get_vendors($data['type']);
 					break;
 				default:
+					// my form help includes a function to mark as checked the
+					// the item with rating
+					$this->load->helper('form');
+					
 					$data['orders'] = $this->Meal_model->get_meal();
 					return $this->load->view('review-order', $data);
 			}
@@ -160,7 +164,7 @@ class Meal extends Controller {
 	// rate(int)
 	//
 	// @params vendor_id as a 3rd uri component and the post: newrate, order_id
-	function rate($vendor_id)
+	function rate()
 	{
 		if (!$this->session->userdata('logged_in'))
 		{
@@ -170,6 +174,7 @@ class Meal extends Controller {
 		
 		$this->load->model('Vendor_model');
 		
+		$vendor_id = $this->input->post('vendor_id');
 		$rating = $this->input->post('newrate');
 		$order_id = $this->input->post('order_id');
 		$user_id = $this->session->userdata('id');
@@ -200,7 +205,10 @@ class Meal extends Controller {
 			);
 		
 		$this->Vendor_model->insert_rating($data);
-		redirect('/meal');
+		if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']))
+		{
+			redirect('/meal');
+		}
 	}
 	
 	// fillem()
