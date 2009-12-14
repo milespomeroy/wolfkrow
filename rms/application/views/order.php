@@ -33,13 +33,12 @@
 	<p class="small">This amount will be deducted directly from your account.</p>
 	
 	<?php if ($vendor_type == 'busboy'): ?>
-	<p>
-		You have made all your vendor selections. 
-		<a href="/meal">Review your orders.</a>
+	<p id="next">
+		<a href="/meal">Review your orders &raquo;</a>
 	</p>
 	
 	<?php else: ?>
-	<p><a href="/meal">Next &raquo;</a></p>
+	<p id="next"><a href="/meal">Next &raquo;</a></p>
 	<?php endif; ?>
 
 	

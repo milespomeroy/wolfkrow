@@ -17,11 +17,22 @@
 	<div class="logout" >
 	<?=$this->session->userdata('full_name')?> | <a href="/login/logout">Logout</a>
 	</div>
+	
+	<a href="/" id="logo">
+		<img src="/images/logo.png" alt="Wolfkrow Diner">
+	</a>
 
 	<h1>Review Your Orders</h1>
 	
 	<h2>Vendor Selections</h2>
 	<table>
+		<tr>
+			<th></th>	
+			<th>Vendor Name</th>
+			<th>Paid</th>
+			<th>Status</th>
+			<th>Rating</th>
+		</tr>
 		<?php foreach ($orders as $order): ?>
 		<tr>
 			<th><?=ucwords($order->vendor_type)?></th>
@@ -71,6 +82,8 @@
 		</tr>
 		<?php endforeach; ?>
 	</table>
+	
+	<p><strong>Total Paid: </strong><?=$total?></p>
 	
 	<h2>Ahh…</h2>
 	<p>

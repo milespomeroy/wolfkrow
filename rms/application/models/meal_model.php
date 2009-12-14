@@ -54,6 +54,17 @@ class Meal_model extends Model {
 		return false;
 	}
 	
+	// get_meal_total()
+	// the total price of the meal
+	function get_meal_total()
+	{
+		$meal_id = $this->get_unfinished_meal();
+		
+		$query = $this->db->query("SELECT SUM(total_price) AS total 
+			FROM orders WHERE meal_id = $meal_id");
+		return $query->row()->total;
+	}
+	
 	// insert_new_meal(int)
 	//
 	// @param (int) user id

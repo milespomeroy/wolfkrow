@@ -7,6 +7,10 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all">
 </head>
 <body>
+	
+	<div class="logout" >
+	<a href="/">Login</a>
+	</div>
 
 <h1>Vendor Account Activation</h1>
 
@@ -15,7 +19,9 @@ vendor who applied, an email would be sent out to the applicant. If the person
 was hired, then an account activation link would be included.</p>
 
 <p>For this prototype I&#8217;m not sending out emails to the vendor applicants.
-Instead, this page will list the vendor account activation links.</p>
+Instead, this page will list the vendor account activation links. To activate 
+a vendor account, login as the manager (email: admin@admin.com, password: admin) 
+and click on “Review Vendor Applications.”</p>
 
 <?php if ($apps): ?>
 <?php foreach ($apps as $app): ?>

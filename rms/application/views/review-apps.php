@@ -16,10 +16,14 @@
 	
 	<ul>
 		<li><a href="/admin">&laquo; Back to Dashboard</a></li>
-		<li>
-			<a href="/vendor/demo_act" class="error">View Activation Links</a>
-		</li>
 	</ul>
+	
+	<p>Once a vendor is hired, an email will be send to them with an 
+		account activation link. For the demo, an email 
+		will not be sent, rather you can 
+		<a href="/vendor/demo_act" class="error">View Activation Links</a>
+		directly.
+	</p>
 
 	<?php if ($vendors): ?>
 	<?php foreach ($vendors as $vendor): ?>

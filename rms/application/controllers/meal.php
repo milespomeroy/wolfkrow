@@ -72,6 +72,7 @@ class Meal extends Controller {
 					$this->load->helper('form');
 					
 					$data['orders'] = $this->Meal_model->get_meal();
+					$data['total'] = $this->Meal_model->get_meal_total();
 					return $this->load->view('review-order', $data);
 			}
 		}

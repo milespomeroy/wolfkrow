@@ -18,7 +18,9 @@
 	</div>
 	<?php endif; ?>
 	
-	<h1>Welcome to Wolfkrow Diner</h1>
+	<a href="/" id="logo">
+		<img src="/images/logo.png" alt="Wolfkrow Diner">
+	</a>
 	
 	<fieldset id="signin">
 		<h2>Login</h2>

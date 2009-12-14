@@ -62,23 +62,29 @@ html {
 }
 
 body {
-	width: 856px;
+	width: 700px; /*856px*/
 	margin: auto;
 	font: 18px/1.444em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-	margin-top: 78px;
+	margin-top: 144px;
 	margin-bottom: 130px;
 	padding-left: 52px;
 	padding-right: 52px;
-	background-color: #FEFFFF;
+	padding-top: 3em;
+	background: #FEFFFF;
 	color: #3C3F36;
 }
 
+
+#logo {
+	position: absolute;
+	top: 79px;
+	margin-left: -98px;
+}
 
 h1 {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 2em;
 	line-height: 1.444em;
-	padding-top: 1.444em;
 	margin-bottom: 0.722em;
 	text-transform: none;
 }
@@ -90,7 +96,7 @@ h2 {
 	margin-top: 1em;
 	margin-bottom: 0.5em;
 	border-bottom: 2px solid #72918B;
-	clear: both;
+	/*clear: both;*/
 }
 
 a {
@@ -132,7 +138,7 @@ dt {
 }
 
 h2#menu {
-	width: 50%;
+	width: 40%;
 }
 
 input[type="checkbox"] {
@@ -280,6 +286,13 @@ fieldset#signin p {
 
 .vendor img {
 	float: right;
+}
+
+/* Order */
+
+p#next {
+	text-align: right;
+	font-size: 1.5em;
 }
 
 /* Admin Dashboard */

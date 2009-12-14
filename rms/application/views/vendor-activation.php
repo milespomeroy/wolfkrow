@@ -101,11 +101,7 @@
 		-->
 	</form>
 	</fieldset>
-	
-	<p class="small">
-		Note: There will be a 10% instutional fee for each service provided.
-	</p>
-	
+
 	<div id="footer">
 		&copy; Wolfkrow Diner 2009 | Software Project for AJE by Miles Pomeroy
 	</div>

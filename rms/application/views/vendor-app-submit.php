@@ -16,7 +16,7 @@
 		processed. 
 	</p>
 	<p class="error">
-		For the demo, emails will not be sent. An activation link will appear
+		For the demo, emails will not be sent. Instead, an activation link will appear
 		on the <a href="/vendor/demo_act">Vendor Account Activation</a> page 
 		when this vendor is marked as “Hired” by the manager.
 	</p>

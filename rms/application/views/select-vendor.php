@@ -38,7 +38,7 @@
 		
 		<?php foreach ($add_services as $serv): ?>
 	
-		<input type="checkbox" id="serv-<?=$serv->id?>" name="serv-<?=$serv->id?>">
+		<input type="checkbox" id="serv-<?=$serv->id?>" name="serv-<?=$serv->id?>" disabled>
 		<label for="serv-<?=$serv->id?>">
 		<?=$serv->name?> ($<?=$serv->price?>)
 		</label>
