@@ -283,6 +283,10 @@ fieldset#signin p {
 	line-height: 4em;
 }
 
+fieldset h3 {
+	clear: both;
+}
+
 /* Nav */
 
 ul#nav {
