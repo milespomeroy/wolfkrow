@@ -1,5 +1,5 @@
 php_value date.timezone 'America/Los_Angeles'
 
 RewriteEngine on
-RewriteCond $1 !^(index\.php|images|scripts|css|proto-views|todo.txt|db.sql|robots\.txt)
+RewriteCond $1 !^(index\.php|images|scripts|css|proto-views|todo.txt|db.sql|robots\.txt|favicon.ico)
 RewriteRule ^(.*)$ /index.php/$1 [L]
